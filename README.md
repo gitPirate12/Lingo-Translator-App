@@ -1,0 +1,1 @@
+Lingo App description
