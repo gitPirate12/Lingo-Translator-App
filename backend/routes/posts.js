@@ -5,7 +5,7 @@ const {
     createPost,
     deletePost,
     updatePost,
-    updateVoteCount
+    updatePostVoteCount
 } = require('../controllers/postController')
 
 const router = express.Router()
@@ -26,6 +26,6 @@ router.delete('/:id', deletePost)
 router.patch('/:id', updatePost)
 
 // UpdateVoteCount of a post
-router.patch('/:id/vote', updateVoteCount)
+router.patch('/:id/vote', updatePostVoteCount)
 
 module.exports = router

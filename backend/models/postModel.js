@@ -16,7 +16,8 @@ const postSchema = new Schema({
         default: 0
     },
     replies: [{
-        type: String // You can change this to an object if each reply has more properties
+        type: Schema.Types.ObjectId, // Reference to the Reply model
+        ref: 'Reply' // Name of the Reply model
     }]
 }, { timestamps: true });
 

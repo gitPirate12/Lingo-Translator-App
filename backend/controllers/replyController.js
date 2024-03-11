@@ -1,12 +1,12 @@
-const Post = require('../models/postModel')
+const Reply = require('../models/replyModel')
 const mongoose = require('mongoose')
 
 
-//get all posts
-const getposts = async (req, res) => {
+//get all replies
+const getReplies = async (req, res) => {
     try {
-        const posts = await Post.find({}).sort({ createdAt: -1 });
-        res.status(200).json(posts);
+        const replies = await Reply.find({}).sort({ createdAt: -1 });
+        res.status(200).json(replies);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -14,73 +14,75 @@ const getposts = async (req, res) => {
 
 
 
-//get a single post
-const getPost = async(req,res) =>{
+//get a single reply
+const getReply = async(req,res) =>{
     const {id} = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such post'})
+        return res.status(404).json({error: 'No such reply'})
     }
-    const post = await Post.findById(id)
+    const reply = await Reply.findById(id)
 
-    if (!post) {
-        return res.status(404).json({error: 'No such post'})
+    if (!reply) {
+        return res.status(404).json({error: 'No such reply'})
     }
 
-    res.status(200).json(post)
+    res.status(200).json(reply)
 }
 
-//create new post 
+//create new reply 
 
-const createPost = async (req, res) =>{
-    const {title, content} = req.body
+const createReply = async (req, res) =>{
+    const {author, content,parentPost} = req.body
 
     //add doc to db
     try {
-        const post = await Post.create({title, content})
-        res.status(200).json(post)
+        const reply = await Reply.create({author, content,parentPost})
+        res.status(200).json(reply)
       } catch (error) {
+        console.error('Error creating reply:', error);
         res.status(400).json({error: error.message})
+        
       }
 }
 
-//delete a post
+//delete a reply
 
-const deletePost = async(req,res) =>{
+const deleteReply = async(req,res) =>{
     const {id} = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such post'})
+        return res.status(404).json({error: 'No such reply'})
     }
 
-    const post = await Post.findOneAndDelete({_id: id})
+    const reply = await Reply.findOneAndDelete({_id: id})
 
-    if (!post) {
-        return res.status(404).json({error: 'No such post'})
+    if (!reply) {
+        return res.status(404).json({error: 'No such reply'})
     }
 
-    res.status(200).json(post)
+    res.status(200).json(reply)
 }
-//update a post
-const updatePost = async(req,res) =>{
+//update a reply
+const updateReply = async(req,res) =>{
     const {id} = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such post'})
+        return res.status(404).json({error: 'No such reply'})
     }
 
-    const post = await Post.findOneAndUpdate({_id: id},{
+    const reply = await Reply.findOneAndUpdate({_id: id},{
         ...req.body
     })
 
-    if (!post) {
-        return res.status(404).json({error: 'No such post'})
+    if (!reply) {
+        return res.status(404).json({error: 'No such reply'})
     }
 
-    res.status(200).json(post)
+    res.status(200).json(reply)
 }
 
-const updatePostVoteCount = async (req, res) => {
+const updateReplyVoteCount = async (req, res) => {
     try {
         // Extract the post ID from the request parameters
         const { id } = req.params;
@@ -89,7 +91,7 @@ const updatePostVoteCount = async (req, res) => {
 
         // Check if the received ID is a valid MongoDB ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({ error: 'No such post' });
+            return res.status(404).json({ error: 'No such reply' });
         }
 
         // Define an update query object
@@ -111,19 +113,19 @@ const updatePostVoteCount = async (req, res) => {
         updateQuery.$min = { voteCount: 0 };
 
         // Find and update the post in the database based on the provided ID and update query
-        const updatePostVoteCount = await Post.findByIdAndUpdate(
+        const updateReplyVoteCount = await Reply.findByIdAndUpdate(
             id,// Post ID
             updateQuery,// Update query
             { new: true }// Return the updated post after the update operation
         );
 
         // If no post is found with the provided ID, return a 404 error
-        if (!updatePostVoteCount) {
-            return res.status(404).json({ error: 'No such post' });
+        if (!updateReplyVoteCount) {
+            return res.status(404).json({ error: 'No such reply' });
         }
 
         // If the update operation is successful, return the updated post with a 200 status
-        res.status(200).json(updatePostVoteCount);
+        res.status(200).json(updateReplyVoteCount);
     } catch (error) {
         // If an error occurs during the execution of the function, return a 500 error
         res.status(500).json({ error: 'Internal Server Error' });
@@ -132,11 +134,10 @@ const updatePostVoteCount = async (req, res) => {
 
 
 module.exports = {
-    getposts,
-    getPost,
-    createPost,
-    deletePost,
-    updatePost,
-    updatePostVoteCount
-   
+    getReplies,
+    getReply,
+    createReply,
+    deleteReply,
+    updateReply,
+    updateReplyVoteCount
 }
