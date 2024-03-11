@@ -1,43 +1,28 @@
 const router = require("express").Router();
-const Emoji = require("../models/Emoji"); 
-
-// Route to add a new emoji
-router.route("/add").post((request, response) => {
-    const { emoji, meaningEng,meaningSin } = request.body;
-
-    const newEmoji = new Emoji({
-        emoji,
-        meaningEng,
-        meaningSin
-    });
-
-    newEmoji.save()
-        .then(() => {
-            response.json("Emoji added successfully");
-        })
-        .catch(error => {
-            console.log(error);
-            response.status(500).send({ status: "Error adding emoji", error: error.message });
-        });
-});
+const Emoji = require("../models/Emoji");
 
 
 
 
-// Route to get an emoji by ID
-router.route("/get/:id").get(async (request, response) => {
-    const emojiId = request.params.id;
+
+
+
+
+
+// Route to search emoji by entering emoji
+router.route("/search/:emoji").get(async (request, response) => {
+    const enteredEmoji = request.params.emoji;
 
     try {
-        const emoji = await Emoji.findById(emojiId);
+        const emoji = await Emoji.findOne({ emoji: enteredEmoji });
         if (emoji) {
-            response.json(emoji);
+            response.json({ status: "Emoji found", meaningEng: emoji.meaningEng, meaningSin: emoji.meaningSin });
         } else {
             response.status(404).json({ status: "Emoji not found" });
         }
     } catch (error) {
         console.log(error);
-        response.status(500).send({ status: "Error getting emoji", error: error.message });
+        response.status(500).send({ status: "Error searching emoji", error: error.message });
     }
 });
 

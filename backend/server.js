@@ -23,15 +23,15 @@ mongoose.connect(URL, {
 
 const connection = mongoose.connection;
 connection.once("open", () => {
-    console.log("Mongodb Connection Success!");
+    console.log("✅ Mongodb Connection Success! ✅");
 })
 
 
 app.listen(PORT, () => {
-    console.log(`Server is up and running on port number : ${PORT}`);
+    console.log(`🚀 Server is up and running on port number : ${PORT}`);
 })
 
-//emoji to text
+//emoji to text translater
 
 const emojiRouter = require("./routes/emoji");
 app.use("/emoji",emojiRouter)
