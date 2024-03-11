@@ -1,15 +1,29 @@
 import './App.css';
+import Header from './component/Navbar/Header';
+
+//emoji to text translater
+
+
+import EmojiText from './component/EmojiText/EmojiText';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <html>
-      <head>
-         <title>LINGO</title>
-      </head>
-      <body>
-        <h2>Welcome to Lingo!</h2>
-      </body>
-    </html>
+    <Router>
+      <div>
+        <Header />
+        <Routes>
+       {/*emoji to text translater*/}
+     
+        
+        <Route path='/emoji_text' element={<EmojiText />} />
+
+       
+
+        </Routes>
+
+      </div>
+    </Router>
   );
 }
 
