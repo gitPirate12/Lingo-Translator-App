@@ -4,6 +4,9 @@
   "description": "Lingo Backend",
   "main": "index.js",
   "scripts": {
+
+  },
+  "author": "",
     "start": "node server.js",
     "dev":"nodemon server.js"
   },
@@ -39,7 +42,10 @@
     "cookie-signature": "^1.0.6",
     "core-js": "^1.2.7",
     "core-util-is": "^1.0.3",
+
+=======
     "cors": "^2.8.5",
+
     "create-react-class": "^15.7.0",
     "debug": "^2.6.9",
     "delegates": "^1.0.0",
@@ -167,5 +173,7 @@
     "wrappy": "^1.0.2",
     "xtend": "^4.0.2",
     "yallist": "^4.0.0"
+  },
+  "keywords": []
   }
 }
