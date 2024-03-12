@@ -41,9 +41,10 @@ function EmojiText() {
       />
       <button onClick={handleSearch}>Search</button>
       <div>
-        <strong>Meaning: </strong>
+        <strong>English: </strong>
         {meaningEng}
       </div>
+    
 
       <div>
         <strong>Meaning: </strong>

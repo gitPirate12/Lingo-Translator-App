@@ -1,6 +1,14 @@
 const router = require("express").Router();
 const Emoji = require("../models/Emoji");
 
+
+
+
+
+
+
+
+
 // Route to add a new emoji
 router.route("/add").post((request, response) => {
     const { emoji, meaningEng, meaningSin } = request.body;
