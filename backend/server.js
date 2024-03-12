@@ -1,5 +1,9 @@
 require('dotenv').config()
 
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const dotenv = require("dotenv");
+
 const express = require('express')
 const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/workouts')
@@ -22,7 +26,7 @@ app.use('/api/posts',PostRoutes)
 app.use('/api/replies',ReplyRoutes)
 
 // connect to db
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => {
     console.log('connected to database')
     // listen to port
@@ -33,12 +37,6 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => {
     console.log(err)
   }) 
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
-require("dotenv").config();
 
 
 const PORT = process.env.PORT || 3040;
