@@ -1,11 +1,9 @@
 import './App.css';
-import Header from './component/Navbar/Header';
 
 //emoji to text translater
 
 
-import EmojiText from './component/EmojiText/EmojiText';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 
 //emoji to text translater
 import Header from './component/Navbar/Header';
