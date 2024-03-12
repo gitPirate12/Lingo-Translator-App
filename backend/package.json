@@ -4,14 +4,6 @@
   "description": "Lingo Backend",
   "main": "index.js",
   "scripts": {
-
-
-  },
-  "author": "",
-    "start": "node server.js",
-    "dev":"nodemon server.js"
-  },
-
     "start": "node server.js",
     "dev":"nodemon server.js"
   },
@@ -183,4 +175,4 @@
   },
   "keywords": []
   }
-}
+
