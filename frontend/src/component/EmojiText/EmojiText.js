@@ -44,8 +44,10 @@ function EmojiText() {
         <strong>English: </strong>
         {meaningEng}
       </div>
+    
+
       <div>
-        <strong>Sinhala: </strong>
+        <strong>Meaning: </strong>
         {meaningSin}
       </div>
 

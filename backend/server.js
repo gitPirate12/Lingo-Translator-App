@@ -69,4 +69,5 @@ app.listen(PORT, () => {
 //emoji to text translater
 
 const emojiRouter = require("./routes/emoji");
+
 app.use("/emoji",emojiRouter)
