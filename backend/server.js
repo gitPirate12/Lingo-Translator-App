@@ -1,9 +1,4 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const emojiRouter = require('./routes/emoji');
+require('dotenv').config()
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -44,34 +39,26 @@ mongoose.connect(process.env.MONGODB_URL)
   }) 
 
 
-// Load environment variables
-dotenv.config();
-
-const app = express();
 const PORT = process.env.PORT || 3040;
-const URL = process.env.MONGODB_URL;
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Routes
-app.use('/emoji', emojiRouter);
+const URL = process.env.MONGODB_URL;
 
-// Connect to MongoDB
 mongoose.connect(URL, {
-    // useCreateIndex: true,
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-    // useFindAndModify: false
+    //useCreateIndex: true,
+    //useNewUrlParser: true,
+    //useUnifieldTopology: true,
+    //useFindAndModify: false
 });
 
 const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log('✅ MongoDB Connection Success! ✅');
-});
+connection.once("open", () => {
+    console.log("✅ Mongodb Connection Success! ✅");
+})
 
-// Start the server
+
 app.listen(PORT, () => {
     console.log(`🚀 Server is up and running on port number : ${PORT}`);
 })
@@ -81,5 +68,3 @@ app.listen(PORT, () => {
 const emojiRouter = require("./routes/emoji");
 
 app.use("/emoji",emojiRouter)
-    console.log(`🚀 Server is up and running on port number: ${PORT}`);
-});
