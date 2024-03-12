@@ -26,6 +26,7 @@ app.use('/api/posts',PostRoutes)
 app.use('/api/replies',ReplyRoutes)
 
 // connect to db
+
 mongoose.connect(process.env.MONGODB_URL)
   .then(() => {
     console.log('connected to database')
