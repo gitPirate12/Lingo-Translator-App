@@ -3,6 +3,7 @@ require('dotenv').config()
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser")
 
 const express = require('express')
 const mongoose = require('mongoose')
@@ -14,6 +15,7 @@ const app = express()
 
 // middleware
 app.use(express.json())
+app.use(cookieParser())
 
 app.use((req, res, next) => {
   console.log(req.path, req.method)
@@ -32,7 +34,7 @@ mongoose.connect(process.env.MONGODB_URL)
     console.log('connected to database')
     // listen to port
     app.listen(process.env.PORT, () => {
-      console.log('listening for requests on port', process.env.PORT)
+      console.log('listening for requests on port', PORT)
     })
   })
   .catch((err) => {
