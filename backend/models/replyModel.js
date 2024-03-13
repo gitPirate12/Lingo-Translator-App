@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const postSchema = new Schema({
-    title: {
-        type: String,
+const replySchema = new Schema({
+    author: {
+        type: String, // Assuming the author is identified by a username
         required: true
     },
     content: {
@@ -15,10 +15,15 @@ const postSchema = new Schema({
         type: Number,
         default: 0
     },
-    replies: [{
-        type: Schema.Types.ObjectId, // Reference to the Reply model
-        ref: 'Reply' // Name of the Reply model
-    }]
+    repliesTo: {
+        type: Schema.Types.ObjectId, // Reference to the parent reply (if applicable)
+        ref: 'Reply'
+    },
+    parentPost: {
+        type: Schema.Types.ObjectId, // Reference to the parent post
+        ref: 'Post',
+        required: true
+    }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Reply', replySchema);
