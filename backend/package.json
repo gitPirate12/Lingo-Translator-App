@@ -80,6 +80,7 @@
     "isarray": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "js-tokens": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
     "kareem": "^2.5.1",
     "loose-envify": "^1.4.0",
     "lru-cache": "^6.0.0",
