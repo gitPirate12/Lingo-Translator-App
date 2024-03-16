@@ -1,6 +1,11 @@
 import './App.css';
 
 //emoji to text translater
+
+
+
+
+//emoji to text translater
 import Header from './component/Navbar/Header';
 import Addemoji from './component/EmojiText/Addemoji';
 import { AllEmojiText } from './component/EmojiText/AllEmojiText';
@@ -14,6 +19,8 @@ function App() {
         <Header />
         <Routes>
        {/*emoji to text translater*/}
+     
+        
         <Route path='/add' element={<Addemoji />} />
         <Route path='/' element={<AllEmojiText />} />
         <Route path='emojiText' element={<EmojiText />} />
