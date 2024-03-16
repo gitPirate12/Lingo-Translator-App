@@ -11,12 +11,20 @@ const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/workouts')
 const PostRoutes = require('./routes/posts')
 const ReplyRoutes = require('./routes/replies')
+
+//user profile and authentication
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
+
+dotenv.config();
+
 // express app
 const app = express()
 
 // middleware
 app.use(express.json())
 app.use(cookieParser())
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   console.log(req.path, req.method)
@@ -27,6 +35,12 @@ app.use((req, res, next) => {
 app.use('/api/workouts', workoutRoutes)
 app.use('/api/posts',PostRoutes)
 app.use('/api/replies',ReplyRoutes)
+
+
+
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // connect to db
 
@@ -46,9 +60,6 @@ mongoose.connect(process.env.MONGODB_URL)
 const PORT = process.env.PORT || 3040;
 
 app.use(cors());
-app.use(bodyParser.json());
-
-
 
 const connection = mongoose.connection;
 connection.once("open", () => {
