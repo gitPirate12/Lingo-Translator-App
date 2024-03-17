@@ -1,4 +1,5 @@
 const Reply = require('../models/replyModel')
+const Post = require('../models/postModel');
 const mongoose = require('mongoose')
 
 
@@ -32,19 +33,39 @@ const getReply = async(req,res) =>{
 
 //create new reply 
 
-const createReply = async (req, res) =>{
-    const {author, content,parentPost} = req.body
+const createReply = async (req, res) => {
+    const { author, reply, parentPost } = req.body;
 
-    //add doc to db
     try {
-        const reply = await Reply.create({author, content,parentPost})
-        res.status(200).json(reply)
-      } catch (error) {
+        // Validate input data
+        if (!author || !reply || !parentPost) {
+            return res.status(400).json({ error: "Missing required fields." });
+        }
+
+        // Ensure that the parent post exists
+        const existingPost = await Post.findById(parentPost);
+        if (!existingPost) {
+            return res.status(404).json({ error: "Parent post not found." });
+        }
+
+        // Create the reply document in the database
+        const newReply = await Reply.create({ author, reply, parentPost });
+
+        // Update the parent post to include the newly created reply
+        existingPost.replies.push(newReply._id);
+        await existingPost.save();
+
+        res.status(201).json(newReply);
+    } catch (error) {
         console.error('Error creating reply:', error);
-        res.status(400).json({error: error.message})
-        
-      }
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 }
+
+// Post a reply to an existing reply (nested reply)
+const createNestedReply = async (req, res) => {
+    // Implementation to create a nested reply
+};
 
 //delete a reply
 
@@ -137,6 +158,7 @@ module.exports = {
     getReplies,
     getReply,
     createReply,
+    createNestedReply,
     deleteReply,
     updateReply,
     updateReplyVoteCount
