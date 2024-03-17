@@ -10,7 +10,7 @@ const mongoose = require('mongoose')
 
 const PostRoutes = require('./routes/posts')
 const ReplyRoutes = require('./routes/replies')
-const UserRoutes = require('./routes/user')
+
 
 
 // express app
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/posts', PostRoutes)
 app.use('/api/replies', ReplyRoutes)
-app.use('/api/user', UserRoutes)
+
 
 // connect to db
 
