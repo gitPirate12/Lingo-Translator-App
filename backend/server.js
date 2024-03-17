@@ -7,10 +7,10 @@ const cookieParser = require("cookie-parser")
 
 const express = require('express')
 const mongoose = require('mongoose')
-const workoutRoutes = require('./routes/workouts')
+
 const PostRoutes = require('./routes/posts')
 const ReplyRoutes = require('./routes/replies')
-const AuthRoutes = require('./routes/auth');
+const UserRoutes = require('./routes/user')
 
 
 // express app
@@ -27,10 +27,9 @@ app.use((req, res, next) => {
 })
 
 // routes
-app.use('/api/workouts', workoutRoutes)
-app.use('/api/posts',PostRoutes)
-app.use('/api/replies',ReplyRoutes)
-app.use('/api/user',AuthRoutes)
+app.use('/api/posts', PostRoutes)
+app.use('/api/replies', ReplyRoutes)
+app.use('/api/user', UserRoutes)
 
 // connect to db
 
