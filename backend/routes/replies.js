@@ -5,7 +5,7 @@ const {
     createReply,
     deleteReply,
     updateReply,
-    updateReplyVoteCount
+   
 } = require('../controllers/replyController')
 
 
@@ -18,7 +18,7 @@ router.get('/', getReplies)
 router.get('/:id', getReply)
 
 // Post a new reply
-router.post('/', createReply)
+router.post('/:postId/', createReply)
 
 // Delete a reply
 router.delete('/:id', deleteReply)
@@ -26,7 +26,6 @@ router.delete('/:id', deleteReply)
 // Update a reply
 router.patch('/:id', updateReply)
 
-// UpdatereplyVoteCount of a reply
-router.patch('/:id/vote', updateReplyVoteCount)
+
 
 module.exports = router
