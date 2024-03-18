@@ -1,0 +1,22 @@
+
+.footer {
+    position: fixed; /* Fixed positioning */
+    bottom: 0; /* Stick to the bottom of the viewport */
+    width: 100%; /* Full width */
+    background-color: #131A2F;
+    color: #fff;
+    padding: 20px 0; /* Adjust padding as needed */
+  }
+  
+  .footer h5 {
+    color: #fff;
+  }
+  
+  .footer p {
+    color: #ccc;
+  }
+  
+  .footer ul li {
+    color: #ccc;
+  }
+  
