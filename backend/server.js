@@ -16,6 +16,7 @@ const ReplyRoutes = require('./routes/replies')
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 
+
 dotenv.config();
 
 // express app
@@ -35,9 +36,6 @@ app.use((req, res, next) => {
 app.use('/api/workouts', workoutRoutes)
 app.use('/api/posts',PostRoutes)
 app.use('/api/replies',ReplyRoutes)
-
-
-
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
