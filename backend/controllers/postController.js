@@ -30,22 +30,30 @@ const getPost = async(req,res) =>{
     res.status(200).json(post)
 }
 
-//create new post 
-
-const createPost = async (req, res) =>{
-    const {title, content} = req.body
-
-    //add doc to db
+const createPost = async (req, res) => {
     try {
-        const post = await Post.create({title, content})
-        res.status(200).json(post)
-      } catch (error) {
-        res.status(400).json({error: error.message})
-      }
-}
+        // Extract necessary data from the request body
+        const { question, author } = req.body;
+
+        // Validate input data
+        if (!question || !author) {
+            return res.status(400).json({ error: "Missing required fields." });
+        }
+
+        // Create a new post document in the database
+        const post = await Post.create({ question, author });
+
+        // Respond with a success status code and the created post data
+        return res.status(200).json({ message: "Post created successfully.", post });
+    } catch (error) {
+        // Handle errors by sending an appropriate error response
+        console.error("Error creating post:", error);
+        return res.status(500).json({ error: "Internal Server Error." });
+    }
+};
+
 
 //delete a post
-
 const deletePost = async(req,res) =>{
     const {id} = req.params
 
@@ -80,53 +88,65 @@ const updatePost = async(req,res) =>{
     res.status(200).json(post)
 }
 
-const updatePostVoteCount = async (req, res) => {
+// Upvote a post
+const upvotePost = async (req, res) => {
+    const { id } = req.params; // Post ID
+    const { userId } = req.user; // User ID from the authenticated user
+    
     try {
-        // Extract the post ID from the request parameters
-        const { id } = req.params;
-        // Extract the action (upvote or downvote) from the request body
-        const { action } = req.body;
-
-        // Check if the received ID is a valid MongoDB ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({ error: 'No such post' });
+        const post = await Post.findById(id);
+        
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
         }
-
-        // Define an update query object
-        let updateQuery = {};
-
-        // Determine the action to be performed based on the request body
-        if (action === 'upvote') {
-            // If the action is upvote, increment the voteCount by 1
-            updateQuery = { $inc: { voteCount: 1 } };
-        } else if (action === 'downvote') {
-            // If the action is downvote, decrement the voteCount by 1
-            updateQuery = { $inc: { voteCount: -1 } };
-        } else {
-            // If the action is neither upvote nor downvote, return a 400 error
-            return res.status(400).json({ error: 'Invalid action' });
+        
+        if (post.upvote.includes(userId)) {
+            return res.status(400).json({ error: "You have already upvoted this post" });
         }
-
-        // Ensure voteCount never goes below 0
-        updateQuery.$min = { voteCount: 0 };
-
-        // Find and update the post in the database based on the provided ID and update query
-        const updatePostVoteCount = await Post.findByIdAndUpdate(
-            id,// Post ID
-            updateQuery,// Update query
-            { new: true }// Return the updated post after the update operation
-        );
-
-        // If no post is found with the provided ID, return a 404 error
-        if (!updatePostVoteCount) {
-            return res.status(404).json({ error: 'No such post' });
-        }
-
-        // If the update operation is successful, return the updated post with a 200 status
-        res.status(200).json(updatePostVoteCount);
+        
+        // Remove user ID from downvote array if exists
+        post.downvote.pull(userId);
+        
+        // Add user ID to upvote array
+        post.upvote.push(userId);
+        
+        await post.save();
+        
+        res.status(200).json({ message: "Post upvoted successfully" });
     } catch (error) {
-        // If an error occurs during the execution of the function, return a 500 error
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error("Error upvoting post:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+// Downvote a post
+const downvotePost = async (req, res) => {
+    const { id } = req.params; // Post ID
+    const { userId } = req.user; // User ID from the authenticated user
+    
+    try {
+        const post = await Post.findById(id);
+        
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+        
+        if (post.downvote.includes(userId)) {
+            return res.status(400).json({ error: "You have already downvoted this post" });
+        }
+        
+        // Remove user ID from upvote array if exists
+        post.upvote.pull(userId);
+        
+        // Add user ID to downvote array
+        post.downvote.push(userId);
+        
+        await post.save();
+        
+        res.status(200).json({ message: "Post downvoted successfully" });
+    } catch (error) {
+        console.error("Error downvoting post:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
@@ -137,6 +157,7 @@ module.exports = {
     createPost,
     deletePost,
     updatePost,
-    updatePostVoteCount
+    upvotePost,
+    downvotePost
    
 }

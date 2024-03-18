@@ -1,4 +1,4 @@
-{/*import React, { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function EmojiText() {
@@ -56,4 +56,3 @@ function EmojiText() {
 }
 
 export default EmojiText;
-*/}
