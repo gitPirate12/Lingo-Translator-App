@@ -6,6 +6,8 @@ const {
     createReply,
     deleteReply,
     updateReply,
+    upvoteReply,
+    downvoteReply
    
 } = require('../controllers/replyController')
 
@@ -22,7 +24,7 @@ router.get('/:id', getReply)
 router.post('/', createReply)
 
 // Post a reply to an existing reply (nested reply)
-router.post('/:parentId/replies', createNestedReply);
+router.post('/:parentId', createNestedReply);
 
 
 // Delete a reply
@@ -30,6 +32,12 @@ router.delete('/:id', deleteReply)
 
 // Update a reply
 router.patch('/:id', updateReply)
+
+// Upvote a reply
+router.patch('/:id/upvote', upvoteReply);
+
+// Downvote a reply
+router.patch('/:id/downvote', downvoteReply);
 
 
 

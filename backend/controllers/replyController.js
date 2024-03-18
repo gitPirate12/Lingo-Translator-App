@@ -62,10 +62,42 @@ const createReply = async (req, res) => {
     }
 }
 
-// Post a reply to an existing reply (nested reply)
 const createNestedReply = async (req, res) => {
-    // Implementation to create a nested reply
+    const { parentId } = req.params; // Extract parent reply ID from request parameters
+    const { reply, author } = req.body; // Extract reply content and author from request body
+
+    try {
+        // Check if the parent reply exists
+        const parentReply = await Reply.findById(parentId);
+        if (!parentReply) {
+            return res.status(404).json({ error: 'Parent reply not found' });
+        }
+
+        // Create the nested reply
+        const nestedReply = new Reply({
+            reply: reply,
+            author: author,
+            parentPost: parentReply.parentPost, // Set parent post ID to match parent reply's parent post
+            parentReply: parentId // Set parent reply ID to create the nesting relationship
+        });
+
+        // Save the nested reply to the database
+        const savedNestedReply = await nestedReply.save();
+
+        // Initialize the replies array if it doesn't exist in the parentReply
+        parentReply.replies = parentReply.replies || [];
+
+        // Add the nested reply ID to the parent reply's replies array
+        parentReply.replies.push(savedNestedReply._id);
+        await parentReply.save();
+
+        res.status(201).json(savedNestedReply);
+    } catch (error) {
+        console.error('Error creating nested reply:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
+
 
 //delete a reply
 
@@ -103,52 +135,56 @@ const updateReply = async(req,res) =>{
     res.status(200).json(reply)
 }
 
-const updateReplyVoteCount = async (req, res) => {
-    try {
-        // Extract the post ID from the request parameters
-        const { id } = req.params;
-        // Extract the action (upvote or downvote) from the request body
-        const { action } = req.body;
+// Function to upvote a reply
+const upvoteReply = async (req, res) => {
+    const { id } = req.params; // Extract reply ID from request parameters
 
+    try {
         // Check if the received ID is a valid MongoDB ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(404).json({ error: 'No such reply' });
         }
 
-        // Define an update query object
-        let updateQuery = {};
+        // Find the reply by ID and increment the upvote count
+        const updatedReply = await Reply.findByIdAndUpdate(id, { $inc: { upvoteCount: 1 } }, { new: true });
 
-        // Determine the action to be performed based on the request body
-        if (action === 'upvote') {
-            // If the action is upvote, increment the voteCount by 1
-            updateQuery = { $inc: { voteCount: 1 } };
-        } else if (action === 'downvote') {
-            // If the action is downvote, decrement the voteCount by 1
-            updateQuery = { $inc: { voteCount: -1 } };
-        } else {
-            // If the action is neither upvote nor downvote, return a 400 error
-            return res.status(400).json({ error: 'Invalid action' });
-        }
-
-        // Ensure voteCount never goes below 0
-        updateQuery.$min = { voteCount: 0 };
-
-        // Find and update the post in the database based on the provided ID and update query
-        const updateReplyVoteCount = await Reply.findByIdAndUpdate(
-            id,// Post ID
-            updateQuery,// Update query
-            { new: true }// Return the updated post after the update operation
-        );
-
-        // If no post is found with the provided ID, return a 404 error
-        if (!updateReplyVoteCount) {
+        // If no reply is found with the provided ID, return a 404 error
+        if (!updatedReply) {
             return res.status(404).json({ error: 'No such reply' });
         }
 
-        // If the update operation is successful, return the updated post with a 200 status
-        res.status(200).json(updateReplyVoteCount);
+        // Return the updated reply with a 200 status
+        res.status(200).json(updatedReply);
     } catch (error) {
         // If an error occurs during the execution of the function, return a 500 error
+        console.error('Error upvoting reply:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Function to downvote a reply
+const downvoteReply = async (req, res) => {
+    const { id } = req.params; // Extract reply ID from request parameters
+
+    try {
+        // Check if the received ID is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).json({ error: 'No such reply' });
+        }
+
+        // Find the reply by ID and decrement the downvote count
+        const updatedReply = await Reply.findByIdAndUpdate(id, { $inc: { downvoteCount: 1 } }, { new: true });
+
+        // If no reply is found with the provided ID, return a 404 error
+        if (!updatedReply) {
+            return res.status(404).json({ error: 'No such reply' });
+        }
+
+        // Return the updated reply with a 200 status
+        res.status(200).json(updatedReply);
+    } catch (error) {
+        // If an error occurs during the execution of the function, return a 500 error
+        console.error('Error downvoting reply:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
@@ -161,5 +197,6 @@ module.exports = {
     createNestedReply,
     deleteReply,
     updateReply,
-    updateReplyVoteCount
+    upvoteReply,
+    downvoteReply
 }
