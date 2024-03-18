@@ -1,7 +1,11 @@
-import './App.css';
+//Navigation bar
+import Navbar from './component/Navbar/Navbar';
+//Footer
+import Footer from './component/Footer/Footer';
+import './component/Footer/FooterApp.css';
+
 
 // emoji to text translater
-import Header from './component/Navbar/Header';
 import Addemoji from './component/EmojiText/Addemoji';
 // import { AllEmojiText } from './component/EmojiText/AllEmojiText';
 import EmojiText from './component/EmojiText/EmojiText';
@@ -11,7 +15,7 @@ function App() {
   return (
     <Router>
       <div>
-        { <Header /> }
+        { <Navbar /> }
         <Routes>
           {/* {emoji to text translater} */}
           {/* Commenting out the route for AllEmojiText */}
@@ -21,6 +25,8 @@ function App() {
           <Route path='emojiText' element={<EmojiText />} />
         </Routes>
       </div>
+      {<Footer/>}
+
     </Router>
   );
 }
