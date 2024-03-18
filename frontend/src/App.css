@@ -38,21 +38,3 @@
   }
 }
 
-.auth_page {
-  width: 100%;
-  min-height: 100vh;
-  background: #fdfdfd;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-}
-
-.form-group {
-  width: 90%; /* Use percentage for better responsiveness */
-  max-width: 700px; /* Limit the width for larger screens */
-  margin-bottom: 20px; /* Increase margin for better spacing */
-}
-
-.form-group label {
-  margin-bottom: 8px; /* Adjust margin as needed */
-}
