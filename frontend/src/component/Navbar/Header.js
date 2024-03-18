@@ -26,7 +26,7 @@ function Header() {
               <Link to="/emoji_text" className="nav-link">Emoji-Text</Link>
             </li>
             <li className="nav-item">
-              <Link to="/community" className="nav-link">Community</Link>
+              <Link to="/Discussion_Forum" className="nav-link">Discussion Forum</Link>
             </li>
             <li className="nav-item">
               <Link to="/add" className="nav-link">Add Emoji</Link>
