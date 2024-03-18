@@ -6,6 +6,7 @@ const User = require('../models/User');
 const { JWT_SECRET } = require('../config');
 
 // Register user
+
 router.post('/register', async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req.body;
