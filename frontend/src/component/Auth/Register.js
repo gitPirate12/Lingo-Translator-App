@@ -7,7 +7,8 @@ const Register = () => {
     email: '',
     password: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    city: ''
   });
 
   const { email, password, firstName, lastName } = formData;
