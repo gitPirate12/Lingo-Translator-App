@@ -28,3 +28,5 @@ export function AllEmojiText(){
         </div>
     )
 }
+
+export default AllEmojiText;
