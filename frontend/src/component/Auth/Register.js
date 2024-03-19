@@ -21,11 +21,12 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/register', formData);
+      const response = await axios.post("http://localhost:3040/api/auth/register", formData);
+      alert('Registration successful:', response.data);
       console.log('Registration successful:', response.data);
 
     } catch (error) {
-      console.error('Registration failed:', error.response.data);
+      alert( error.message);
     }
   };
 
