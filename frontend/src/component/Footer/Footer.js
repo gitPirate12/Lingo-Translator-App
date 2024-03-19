@@ -30,6 +30,12 @@ function Footer() {
             </div>
           </div>
         </div>
+        <div className='footer-right'>
+                    <p className='FNFooterBottom'>
+                        © 2024 LINGO All Rights Reserved.
+                    </p>
+
+                </div>
       </div>
     </footer>
   );

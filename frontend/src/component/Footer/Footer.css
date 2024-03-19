@@ -3,11 +3,12 @@
 .footer {
     background-color: #131A2F;
     color: #fff;
-    padding: 50px 0;
+    padding: 0px 0px;
   }
   
   .footer-logo {
     width: 150px; /* Adjust size as needed */
+    padding: 0px;
   }
   
   .footer-title {
@@ -30,4 +31,7 @@
   .footer-social a:hover {
     color: #ccc;
   }
-  
+  .FNFooterBottom{
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+}
