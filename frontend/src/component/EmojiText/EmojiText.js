@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Header from './Header';
 
 function EmojiText() {
   const [emoji, setEmojiInput] = useState('');
@@ -31,7 +30,6 @@ function EmojiText() {
 
   return (
     <div className="App">
-      <Header/>
       <h1>Emoji Translator</h1>
       <label htmlFor="emoji">Enter Emoji: </label>
       <input

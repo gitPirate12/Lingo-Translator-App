@@ -1,58 +1,88 @@
-const express = require("express");
-const { check, validationResult } = require("express-validator");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-const verifyToken = require("../authentication/auth");
-
+const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+const { JWT_SECRET } = require('../config');
 
-router.post("/login", [
-    check("email", "Email is required").isEmail(),
-    check("password", "Password with 6 or more characters required").isLength({
-        min: 6,
-    }),
-], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+// Register user
+router.post('/register', async (req, res) => {
+  try {
+    const { email, password, firstName, lastName } = req.body;
+    let user = await User.findOne({ email });
+
+    if (user) {
+      return res.status(400).json({ msg: 'User already exists' });
     }
 
-    const { email, password } = req.body;
+    user = new User({
+      email,
+      password,
+      firstName,
+      lastName
+    });
 
-    try {
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: "Invalid Credentials" });
-        }
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid Credentials" });
-        }
+    await user.save();
 
-        const token = jwt.sign(
-            { userId: user._id },
-            process.env.JWT_SECRET_KEY,
-            {
-                expiresIn: "1d",
-            }
-        );
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
 
-        res.cookie("auth_token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 86400000,
-        });
-        res.status(200).json({ userId: user._id });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
-    }
+    jwt.sign(
+      payload,
+      JWT_SECRET,
+      { expiresIn: 3600 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
-router.get("/validate-token", verifyToken, (req, res) => {
-    res.status(200).send({ userId: req.userId });
+// Login user
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ msg: 'Invalid Credentials' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ msg: 'Invalid Credentials' });
+    }
+
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    jwt.sign(
+      payload,
+      JWT_SECRET,
+      { expiresIn: 3600 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;
