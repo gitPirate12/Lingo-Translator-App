@@ -9,6 +9,9 @@ import Login from './component/Auth/Login';
 import Register from './component/Auth/Register';
 import DiscussionForum from './component/DiscussionForum/DiscussionForum';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Footer from './component/Footer/Footer'
+import Profile from './component/Profile/Profile'
+import Dashboard from './component/Profile/Dashboard';
 
 function App() {
   return (
@@ -21,8 +24,13 @@ function App() {
           <Route path='/Discussion_Forum' element={<DiscussionForum/>}/>
           <Route path='/add' element={<Addemoji />} />
           <Route path='emojiText' element={<EmojiText />} />
-          <Route path='/login' element={<Login />} />
+          
           <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='profile' element={<Profile/>}/>
+          <Route path="/dashboard" component={<Dashboard/>}/>
+
+          <Route path='/footer' element={<Footer />} />          
         </Routes>
       </div>
     </Router>

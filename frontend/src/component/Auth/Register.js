@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Register.css';
+import Header from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
+import Swal from 'sweetalert2';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,26 +25,54 @@ const Register = () => {
 
     try {
       const response = await axios.post("http://localhost:3040/api/auth/register", formData);
-      alert('Registration successful:', response.data);
+      setFormData({ ...formData, password: '', email: '', firstName: '', lastName: '' });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Registration Successful",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      setTimeout(() => {
+        redirectToLogin();
+      }, 1000);
+
       console.log('Registration successful:', response.data);
 
     } catch (error) {
-      alert( error.message);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Registration failed",
+        showConfirmButton: false,
+        timer: 1500
+      })
+      console.log("Registration failed")
     }
   };
 
+  const redirectToLogin = () => {
+    window.location.href = '/login';
+  };
+
   return (
-    <div className="container">
-      <div className="registration-form">
-        <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="firstName" value={firstName} onChange={handleChange} placeholder="First Name" required />
-          <input type="text" name="lastName" value={lastName} onChange={handleChange} placeholder="Last Name" required />
-          <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" required />
-          <input type="password" name="password" value={password} onChange={handleChange} placeholder="Password" minLength="6" required />
-          <button type="submit">Register</button>
-        </form>
+    <div>
+      <Header/>
+      <div className="container">
+        <div className="registration-form">
+          <h2>Register</h2>
+          <form onSubmit={handleSubmit}>
+            <input type="text" name="firstName" value={firstName} onChange={handleChange} placeholder="First Name" required />
+            <input type="text" name="lastName" value={lastName} onChange={handleChange} placeholder="Last Name" required />
+            <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" required />
+            <input type="password" name="password" value={password} onChange={handleChange} placeholder="Password" minLength="6" required />
+            <button type="submit">Register</button>
+          </form>
+          <p>Already have an account? <a href="/login">Login Here</a></p>
+        </div>
       </div>
+      <Footer/>
     </div>
   );
 };
