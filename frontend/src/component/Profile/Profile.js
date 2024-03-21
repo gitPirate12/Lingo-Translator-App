@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/*import React, { useState, useEffect } from 'react';                 //  not completed yet
 import axios from 'axios';
 
 const Profile = () => {
@@ -38,7 +38,20 @@ const Profile = () => {
       <p>Name: {user.firstName} {user.lastName}</p>
       <p>Email: {user.email}</p>
       <p>City: {user.city}</p>
-      {/* Add more profile information here */}
+    </div>
+  );
+};
+
+export default Profile;
+*/
+
+import React from 'react';
+
+const Profile = () => {
+  return (
+    <div>
+      <h2>User Profile</h2>
+      <p>Content will be available soon</p>
     </div>
   );
 };

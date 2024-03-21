@@ -81,38 +81,38 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Get user profile
-router.get('/profile', async (req, res) => {
-  try {
-    // Get user ID from JWT token
-    const userId = req.user.id;
-    // Fetch user profile from database
-    const user = await User.findById(userId).select('-password');
-    // Return user profile
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+// // Get user profile                                   // have some errors
+// router.get('/profile', async (req, res) => {
+//   try {
+//     // Get user ID from JWT token
+//     const userId = req.user.id;
+//     // Fetch user profile from database
+//     const user = await User.findById(userId).select('-password');
+//     // Return user profile
+//     res.json(user);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server Error');
+//   }
+// });
 
-// Update user profile
-router.put('/profile', async (req, res) => {
-  try {
-    // Get user ID from JWT token
-    const userId = req.user.id;
-    // Extract updated profile data from request body
-    const { firstName, lastName, city } = req.body;
-    // Update user profile in the database
-    await User.findByIdAndUpdate(userId, { firstName, lastName, city });
-    // Fetch updated user profile from database
-    const updatedUser = await User.findById(userId).select('-password');
-    // Return updated user profile
-    res.json(updatedUser);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+// // Update user profile
+// router.put('/profile', async (req, res) => {
+//   try {
+//     // Get user ID from JWT token
+//     const userId = req.user.id;
+//     // Extract updated profile data from request body
+//     const { firstName, lastName, city } = req.body;
+//     // Update user profile in the database
+//     await User.findByIdAndUpdate(userId, { firstName, lastName, city });
+//     // Fetch updated user profile from database
+//     const updatedUser = await User.findById(userId).select('-password');
+//     // Return updated user profile
+//     res.json(updatedUser);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server Error');
+//   }
+// });
 
 module.exports = router;
