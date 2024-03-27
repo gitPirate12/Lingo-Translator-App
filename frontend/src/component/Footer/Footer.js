@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-import footerImage from "./ImageFooter/logo.jpg"; // Lingo image for footer
+import footerImage from "./ImageFooter/logo.png"; // Lingo image for footer
 
 function Footer() {
   return (
