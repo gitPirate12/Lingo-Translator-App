@@ -49,7 +49,10 @@ const {transcript,browserSupportsSpeechRecognition} = useSpeechRecognition();
   <>
       {/* interface */}
        <div className='container'>
-        <h2>Voice Translator</h2>
+        <select className='btn-culture'>
+          <option value={0} readOnly>Select Culture type</option>
+          <option>Down South</option>
+        </select>
         <br></br>
         <ul className="nuv_item">
               <a className='trans-select' defaultValue='en-GB'value={fromContent} onChange={(e) => setFromContent(e.target.value)} >English</a>

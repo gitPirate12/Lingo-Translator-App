@@ -4,14 +4,15 @@ import image_navlogo from "./NavImage/logo.png";
 import image1_userlogo from "./NavImage/user.png"; 
 import "./Navbar.css";
 
+
 function Navbar() {
   return (
+    
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <div className="navbar-logo">
             <img src={image_navlogo} alt="App logo" />
-            <div className="navbar-title"><b>LINGO Translator</b></div>
           </div>
         </Link>
         <button
@@ -26,7 +27,7 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+          <ul className="navbar-ul">
             <li className="nav-item">
               <Link to="/Rash_fade" className="nav-link">World Translator</Link>
             </li>

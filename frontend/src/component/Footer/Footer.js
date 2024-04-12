@@ -4,7 +4,7 @@ import footerImage from "./ImageFooter/logo.png"; // Lingo image for footer
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer id="footer">
       <div className="container">
         <div className="row">
           <div className="col-md-4">

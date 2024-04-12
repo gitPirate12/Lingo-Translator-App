@@ -1,3 +1,5 @@
+
+
 .trans-select{
     padding: 10px 115px 10px 11px;
     margin-right: 15%;
@@ -9,4 +11,24 @@
     color: black;
     text-decoration: none;
     
+  }
+  .btn-culture{
+    color:white ;
+    background-color: #2b3347;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 10px 30px 10px 20px;
+    appearance: none;
+    border-style: none;
+    position:relative;
+    background-image: url(./arrow_right.png);
+    background-repeat:  no-repeat;
+    background-position: right 9px center;
+    background-size: 10px;
+
+  }
+  .btn-culture:hover{
+    background-color: #2b3347;
+    opacity: 90%;
   }
