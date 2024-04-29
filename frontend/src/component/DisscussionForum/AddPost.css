@@ -1,0 +1,50 @@
+.AddPostContainer {
+  width: 400px;
+  height: 300px; /* Adjust the height as needed */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 400px; /* Add margin-top to bring it down */
+}
+
+.AddPost h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 750px; /* Add margin-top to bring it down inside the container */
+}
+
+.form-group {
+  margin-bottom: 20px;
+  margin-top: 20px; /* Add margin-top to bring it down inside the container */
+}
+
+label {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
