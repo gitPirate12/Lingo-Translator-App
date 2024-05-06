@@ -28,8 +28,8 @@ function App() {
           <Route path='emojiText' element={<EmojiText />} />
         </Routes>
       </div>
+      
       {<Footer/>}
-
     </Router>
   );
 }

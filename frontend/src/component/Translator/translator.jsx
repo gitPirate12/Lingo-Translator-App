@@ -54,14 +54,15 @@ const {transcript,browserSupportsSpeechRecognition} = useSpeechRecognition();
           <option>Down South</option>
         </select>
         <br></br>
-        <ul className="nuv_item">
-              <a className='trans-select' defaultValue='en-GB'value={fromContent} onChange={(e) => setFromContent(e.target.value)} >English</a>
-              <a className='trans-select' defaultValue='si-LK'value={fromContent} onChange={(e) => setFromContent(e.target.value)} >Sinhala</a>
-          </ul>
+        <div className='rec_item'>
+          
+              <div id='trans-select1' defaultValue='en-GB'value={fromContent} onChange={(e) => setFromContent(e.target.value)} >English</div>
+              <div id='trans-select2' defaultValue='si-LK'value={fromContent} onChange={(e) => setFromContent(e.target.value)} >Sinhala</div>
+          
         <br></br>
         <br></br>
-        <textarea  onClick={()=>setTextToCopy(inputText)} maxLength="5000" className="fromText" placeholder="write down!" value={inputText+transcript} onChange={handleInputChange}>{transcript}</textarea>
-        <textarea className="toTranslate" placeholder="Translated Text" value={translatedText} readOnly></textarea>
+        <textarea id='textInOut' onClick={()=>setTextToCopy(inputText)} maxLength="5000" className="fromText" placeholder="write down!" value={inputText+transcript} onChange={handleInputChange}>{transcript}</textarea>
+        <textarea id='textInOut' className="toTranslate" placeholder="Translated Text" value={translatedText} readOnly></textarea>
         <br></br>
         
         <button className="translateBtn" onClick={handleTranslate}>Translate</button>
@@ -73,7 +74,7 @@ const {transcript,browserSupportsSpeechRecognition} = useSpeechRecognition();
           
           <button className="translateBtn" onClick={startListening}>Start Listening</button>
           <button className="translateBtn" onClick={SpeechRecognition.stopListening}>Stop Listening</button>
-
+          </div>
         </div> 
       
     </>
