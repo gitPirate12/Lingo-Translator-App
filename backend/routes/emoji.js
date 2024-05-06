@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const Emoji = require("../models/Emoji");
 
+<<<<<<< HEAD
+
+
+=======
 // Route to add a new emoji
 router.route("/add").post(async (request, response) => {
     const { emoji, meaningEng, meaningSin } = request.body;
@@ -86,6 +90,7 @@ router.route("/get/:id").get(async (request, response) => {
         response.status(500).send({ status: "Error getting emoji", error: error.message });
     }
 });
+>>>>>>> feature/heshan.s/emoji-text-translater
 
 // Route to search emoji by entering emoji
 router.route("/search/:emoji").get(async (request, response) => {

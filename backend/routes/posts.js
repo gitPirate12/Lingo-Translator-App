@@ -1,31 +1,35 @@
-const express = require('express')
+const express = require('express');
 const {
     getposts,
     getPost,
     createPost,
     deletePost,
     updatePost,
-    updatePostVoteCount
-} = require('../controllers/postController')
+    upvotePost,
+    downvotePost
+} = require('../controllers/postController');
 
-const router = express.Router()
+const router = express.Router();
 
 // Get all posts
-router.get('/', getposts)
+router.get('/', getposts);
 
 // Get a single post
-router.get('/:id', getPost)
+router.get('/:id', getPost);
 
 // Post a new post
-router.post('/', createPost)
+router.post('/', createPost);
 
 // Delete a post
-router.delete('/:id', deletePost)
+router.delete('/:id', deletePost);
 
 // Update a post
-router.patch('/:id', updatePost)
+router.patch('/:id', updatePost);
 
-// UpdateVoteCount of a post
-router.patch('/:id/vote', updatePostVoteCount)
+// Upvote a post
+router.patch('/:id/upvote', upvotePost);
 
-module.exports = router
+// Downvote a post
+router.patch('/:id/downvote', downvotePost);
+
+module.exports = router;
