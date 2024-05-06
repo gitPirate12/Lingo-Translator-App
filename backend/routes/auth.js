@@ -79,6 +79,7 @@ router.post('/login', async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+<<<<<<< HEAD
 });
 
 // Get user profile
@@ -113,6 +114,8 @@ router.put('/profile', async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+=======
+>>>>>>> feature/heshan.s/emoji-text-translater
 });
 
 module.exports = router;
