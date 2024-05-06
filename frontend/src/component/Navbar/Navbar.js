@@ -59,11 +59,6 @@ function Navbar() {
                 onClick={() => handleLinkClick("Community")}
               >
                 Community
-                to="/Discussion_Forum"
-                className={`nav-link ${activeLink === "Discussion Forum" ? "active" : ""}`}
-                onClick={() => handleLinkClick("Discussion Forum")}
-              >
-                Discussion Forum
               </Link>
             </li>
           </ul>
@@ -79,7 +74,7 @@ function Navbar() {
                 <img src={image1_userlogo} alt="User photo" className="profile-image" />
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><Link className="dropdown-item" to="/profile">View User Profile</Link></li>
+                <li><Link className="dropdown-item" to="/user-profile">View User Profile</Link></li>
                 <li><Link className="dropdown-item" to="/logout">Log Out</Link></li>
               </ul>
             </div>

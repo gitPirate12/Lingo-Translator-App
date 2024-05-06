@@ -8,12 +8,7 @@
     "react": "",
     "react-dom": "",
     "react-router-dom": "",
-<<<<<<< HEAD
-    "react-scripts": "",
-    "sweetalert2": "^11.10.6"
-=======
     "react-scripts": ""
->>>>>>> feature/heshan.s/emoji-text-translater
   },
   "scripts": {
     "start": "react-scripts start",

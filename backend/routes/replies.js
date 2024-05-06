@@ -1,13 +1,10 @@
 const express = require('express')
 const {
     getReplies,
-    createNestedReply,
     getReply,
     createReply,
     deleteReply,
     updateReply,
-    upvoteReply,
-    downvoteReply
    
 } = require('../controllers/replyController')
 
@@ -21,24 +18,13 @@ router.get('/', getReplies)
 router.get('/:id', getReply)
 
 // Post a new reply
-router.post('/', createReply)
-
-// Post a reply to an existing reply (nested reply)
-router.post('/:parentId', createNestedReply);
-
-
+router.post('/:postId/', createReply)
 
 // Delete a reply
 router.delete('/:id', deleteReply)
 
 // Update a reply
 router.patch('/:id', updateReply)
-
-// Upvote a reply
-router.patch('/:id/upvote', upvoteReply);
-
-// Downvote a reply
-router.patch('/:id/downvote', downvoteReply);
 
 
 
