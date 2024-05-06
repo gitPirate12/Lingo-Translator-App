@@ -59,6 +59,11 @@ function Navbar() {
                 onClick={() => handleLinkClick("Community")}
               >
                 Community
+                to="/Discussion_Forum"
+                className={`nav-link ${activeLink === "Discussion Forum" ? "active" : ""}`}
+                onClick={() => handleLinkClick("Discussion Forum")}
+              >
+                Discussion Forum
               </Link>
             </li>
           </ul>

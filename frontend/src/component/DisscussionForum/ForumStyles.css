@@ -1,0 +1,108 @@
+.Forum {
+    font-family: Arial, sans-serif;
+    margin-bottom: 200px;
+    margin-left: 40px; /* Move the entire forum to the right by 40px */
+    width: 50%; /* Set the width of the forum container */
+    max-width: 100%; /* Ensure it doesn't exceed 100% of the available width */
+}
+
+.question {
+    display: flex;
+    align-items: center;
+}
+
+.vote-buttons {
+    margin-right: 10px; /* Adjust the spacing between buttons and the question */
+}
+
+.upvote-button,
+.downvote-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 5px; /* Adjust the vertical spacing between buttons */
+}
+
+.upvote-button:hover,
+.downvote-button:hover {
+    color: blue; /* Change the color when hovering */
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.posts {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.post {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 100%; /* Ensure posts take up full width */
+}
+
+.post h2 {
+    font-size: 24px; /* Increase heading size for posts */
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post p {
+    font-size: 16px; /* Increase font size for post content */
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.reply {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.reply p {
+    margin-bottom: 5px;
+    font-size: 14px; /* Adjust font size for replies */
+}
+
+.nested-reply {
+    margin-left: 40px;
+    border-left: 2px solid #ccc;
+    padding-left: 10px;
+}
+
+.nested-reply p {
+    font-style: italic;
+    color: #888;
+    font-size: 12px; /* Adjust font size for nested replies */
+}
+
+.SearchPost {
+    position: absolute;
+    top: 120px; /* Adjusted to move up by 20px */
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.AddPost {
+    position: absolute;
+    top: 160px; /* Adjusted to move down by 20px */
+    right: 80px; /* Adjusted to bring it closer to the search bar */
+    transform: translateY(-50%);
+}
+
+.AddPost button {
+    margin-top: 10px; /* Add margin to the button for spacing */
+}
+
+
+.aggregate-vote-count {
+    display: block;
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-    getposts,
+    getPosts,
     getPost,
     createPost,
     deletePost,
@@ -12,7 +12,9 @@ const {
 const router = express.Router();
 
 // Get all posts
-router.get('/', getposts);
+
+
+router.get('/', getPosts);
 
 // Get a single post
 router.get('/:id', getPost);
@@ -33,3 +35,5 @@ router.patch('/:id/upvote', upvotePost);
 router.patch('/:id/downvote', downvotePost);
 
 module.exports = router;
+
+

@@ -1,16 +1,29 @@
 const Post = require('../models/postModel')
+const Reply = require('../models/replyModel');
 const mongoose = require('mongoose')
 
-
-//get all posts
-const getposts = async (req, res) => {
+const getPosts = async (req, res) => {
     try {
-        const posts = await Post.find({}).sort({ createdAt: -1 });
+        const posts = await Post.find({})
+            .populate('author') // Populate the 'author' field of each post
+            .populate({
+                path: 'replies', // Populate the 'replies' field
+                populate: {
+                    path: 'author', // Populate the 'author' field of each reply
+                    model: 'userinfodetails'
+                }
+            });
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}
+};
+
+
+
+
+
+
 
 
 
@@ -152,7 +165,7 @@ const downvotePost = async (req, res) => {
 
 
 module.exports = {
-    getposts,
+    getPosts,
     getPost,
     createPost,
     deletePost,

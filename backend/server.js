@@ -12,6 +12,9 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const emojiRouter = require('./routes/emoji');
 
+
+
+// Initialize Express app
 const app = express();
 
 // Middleware
