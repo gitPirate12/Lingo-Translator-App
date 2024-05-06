@@ -1,6 +1,7 @@
 const express = require('express')
 const {
     getReplies,
+    createNestedReply,
     getReply,
     createReply,
     deleteReply,
@@ -22,6 +23,11 @@ router.get('/:id', getReply)
 // Post a new reply
 router.post('/', createReply)
 
+// Post a reply to an existing reply (nested reply)
+router.post('/:parentId', createNestedReply);
+
+
+
 // Delete a reply
 router.delete('/:id', deleteReply)
 
@@ -33,6 +39,7 @@ router.patch('/:id/upvote', upvoteReply);
 
 // Downvote a reply
 router.patch('/:id/downvote', downvoteReply);
+
 
 
 module.exports = router

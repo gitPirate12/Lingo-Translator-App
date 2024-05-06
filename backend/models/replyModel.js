@@ -16,11 +16,13 @@ const replySchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Post",
+
     },
     parentReply: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Reply",
     },
+  
     upvote: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "userInfoDetail",
@@ -29,10 +31,12 @@ const replySchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "userInfoDetail",
     }],
+
     nestedReplies: [{ 
         type: mongoose.Schema.Types.ObjectId,
         ref: "Reply",
     }]
+
 }, { timestamps: true });
 
 // Middleware to remove deleted reply ID from the associated post's replies array

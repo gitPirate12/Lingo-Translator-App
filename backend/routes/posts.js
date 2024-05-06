@@ -12,6 +12,8 @@ const {
 const router = express.Router();
 
 // Get all posts
+
+
 router.get('/', getPosts);
 
 // Get a single post
@@ -33,3 +35,5 @@ router.patch('/:id/upvote', upvotePost);
 router.patch('/:id/downvote', downvotePost);
 
 module.exports = router;
+
+

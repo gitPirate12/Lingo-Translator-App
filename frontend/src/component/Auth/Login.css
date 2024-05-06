@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-form {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: #f9f9f9;
+  }
+  
+  .login-form h2 {
+    text-align: center;
+  }
+  
+  .login-form input,
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  .login-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  

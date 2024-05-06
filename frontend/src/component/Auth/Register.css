@@ -1,3 +1,38 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.registration-form {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  background-color: #f9f9f9;
+}
+
+.registration-form h2 {
+  text-align: center;
+}
+
+.registration-form input,
+.registration-form button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.registration-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
 body {
     background-color: lightblue;
   }

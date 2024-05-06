@@ -1,25 +1,35 @@
 const router = require("express").Router();
 const Emoji = require("../models/Emoji");
 
+<<<<<<< HEAD
+
+
+=======
 // Route to add a new emoji
-router.route("/add").post((request, response) => {
+router.route("/add").post(async (request, response) => {
     const { emoji, meaningEng, meaningSin } = request.body;
 
-    const newEmoji = new Emoji({
-        emoji,
-        meaningEng,
-        meaningSin
-    });
+    try {
+        // Check if the emoji already exists
+        const existingEmoji = await Emoji.findOne({ emoji });
+        if (existingEmoji) {
+            return response.status(400).json({ status: "Error", error: "Emoji already exists" });
+        }
 
-    newEmoji.save()
-        .then(() => {
-            response.json("Emoji added successfully");
-        })
-        .catch(error => {
-            console.log(error);
-            response.status(500).send({ status: "Error adding emoji", error: error.message });
+        const newEmoji = new Emoji({
+            emoji,
+            meaningEng,
+            meaningSin
         });
+
+        await newEmoji.save();
+        response.json("Emoji added successfully");
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({ status: "Error adding emoji", error: error.message });
+    }
 });
+
 
 // Route to get all emojis
 router.route("/").get((request, response) => {
@@ -80,6 +90,7 @@ router.route("/get/:id").get(async (request, response) => {
         response.status(500).send({ status: "Error getting emoji", error: error.message });
     }
 });
+>>>>>>> feature/heshan.s/emoji-text-translater
 
 // Route to search emoji by entering emoji
 router.route("/search/:emoji").get(async (request, response) => {

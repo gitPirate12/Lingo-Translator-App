@@ -20,11 +20,7 @@ router.post('/register', async (req, res) => {
       password,
       firstName,
       lastName
-    });
-
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
+    });    
     await user.save();
 
     const payload = {
@@ -55,11 +51,11 @@ router.post('/login', async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ msg: 'Invalid Credentials' });
+      return res.status(400).json({ msg: 'Account not found' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
+   
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid Credentials' });
     }
@@ -83,6 +79,43 @@ router.post('/login', async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+<<<<<<< HEAD
+});
+
+// Get user profile
+router.get('/profile', async (req, res) => {
+  try {
+    // Get user ID from JWT token
+    const userId = req.user.id;
+    // Fetch user profile from database
+    const user = await User.findById(userId).select('-password');
+    // Return user profile
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Update user profile
+router.put('/profile', async (req, res) => {
+  try {
+    // Get user ID from JWT token
+    const userId = req.user.id;
+    // Extract updated profile data from request body
+    const { firstName, lastName, city } = req.body;
+    // Update user profile in the database
+    await User.findByIdAndUpdate(userId, { firstName, lastName, city });
+    // Fetch updated user profile from database
+    const updatedUser = await User.findById(userId).select('-password');
+    // Return updated user profile
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+=======
+>>>>>>> feature/heshan.s/emoji-text-translater
 });
 
 module.exports = router;
