@@ -14,7 +14,7 @@ const Register = () => {
     city: ''
   });
 
-  const { email, password, firstName, lastName } = formData;
+  const { email, password, firstName, lastName, city } = formData;
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +25,7 @@ const Register = () => {
 
     try {
       const response = await axios.post("http://localhost:3040/api/auth/register", formData);
-      setFormData({ ...formData, password: '', email: '', firstName: '', lastName: '' });
+      setFormData({ ...formData, password: '', email: '', firstName: '', lastName: '', city: '' });
       Swal.fire({
         position: "center",
         icon: "success",
@@ -67,6 +67,7 @@ const Register = () => {
             <input type="text" name="lastName" value={lastName} onChange={handleChange} placeholder="Last Name" required />
             <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" required />
             <input type="password" name="password" value={password} onChange={handleChange} placeholder="Password" minLength="6" required />
+            <input type="text" name="city" value={city} onChange={handleChange} placeholder="City" required />
             <button type="submit">Register</button>
           </form>
           <p>Already have an account? <a href="/login">Login Here</a></p>
