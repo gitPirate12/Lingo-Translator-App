@@ -1,6 +1,5 @@
 
-.footer {
-    position: fixed; /* Fixed positioning */
+.footer {/* Fixed positioning */
     bottom: 0; /* Stick to the bottom of the viewport */
     width: 100%; /* Full width */
     background-color: #131A2F;
