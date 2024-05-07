@@ -8,7 +8,8 @@
     "react": "",
     "react-dom": "",
     "react-router-dom": "",
-    "react-scripts": ""
+    "react-scripts": "",
+    "sweetalert2": "^11.10.8"
   },
   "scripts": {
     "start": "react-scripts start",

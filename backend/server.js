@@ -9,7 +9,6 @@ dotenv.config();
 // Routes
 const PostRoutes = require('./routes/posts');
 const ReplyRoutes = require('./routes/replies');
-const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const emojiRouter = require('./routes/emoji');
 
@@ -22,16 +21,15 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
 
-// Logging middleware
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+// // Logging middleware
+// app.use((req, res, next) => {
+//   console.log(req.path, req.method);
+//   next();
+// });
 
 // Routes
 app.use('/api/posts', PostRoutes);
 app.use('/api/replies', ReplyRoutes);
-app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/emoji', emojiRouter);
 
