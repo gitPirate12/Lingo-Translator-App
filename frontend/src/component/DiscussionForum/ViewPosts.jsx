@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './ViewPosts.css'; // Import CSS file for styles
+import DeletePost from './DeletePost'; // Import DeletePost component
 
 function ViewPosts() {
   // State to store the fetched posts
@@ -44,6 +45,17 @@ function ViewPosts() {
     fetchPosts();
   }, []);
 
+  const handleDelete = async (postId) => {
+    try {
+      await axios.delete(`http://localhost:3040/api/posts/${postId}`);
+      // Optionally, you can handle success or display a message
+      fetchPosts(); // Fetch posts again to update the list after deletion
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      // Optionally, you can handle errors or display an error message
+    }
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -74,7 +86,8 @@ function ViewPosts() {
             <button className="action-button">Vote Up</button>
             <button className="action-button">Vote Down</button>
             <button className="action-button">Edit</button>
-            <button className="action-button">Delete</button>
+            {/* Use DeletePost component for deleting */}
+            <DeletePost postId={post._id} onDelete={() => handleDelete(post._id)} />
             <hr />
           </div>
         ))}
