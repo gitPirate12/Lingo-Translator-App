@@ -11,6 +11,9 @@ import Addemoji from './component/EmojiText/Addemoji';
 import EmojiText from './component/EmojiText/EmojiText';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import Login from './component/Auth/Login';
+import Signup from './component/Auth/Signup';
+
 function App() {
   return (
     <Router>
@@ -20,7 +23,8 @@ function App() {
           {/* {emoji to text translater} */}
           {/* Commenting out the route for AllEmojiText */}
           {/* <Route path='/' element={<AllEmojiText />} /> */}
-          
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
           <Route path='/add' element={<Addemoji />} />
           <Route path='emojiText' element={<EmojiText />} />
         </Routes>
