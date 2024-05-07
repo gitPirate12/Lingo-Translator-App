@@ -7,8 +7,6 @@ const {
     deleteReply,
     updateReply,
 } = require('../controllers/replyController');
-   
-
 
 const router = express.Router();
 
@@ -21,7 +19,6 @@ router.get('/:id', getReply);
 // Post a new reply
 router.post('/:postId/', requireAuth, createReply); // Applying requireAuth middleware
 
-
 // Delete a reply
 router.delete('/:id', requireAuth, deleteReply); // Applying requireAuth middleware
 
@@ -29,5 +26,3 @@ router.delete('/:id', requireAuth, deleteReply); // Applying requireAuth middlew
 router.patch('/:id', requireAuth, updateReply); // Applying requireAuth middleware
 
 module.exports = router;
-
-
