@@ -1,57 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
-const User = require('../models/User');
+
+const User = require('../models/userModel');
+
+// Import user controller functions
+const {
+    loginUser,
+    signupUser,
+    getUserProfile,
+    deleteUserProfile,
+    updateUserProfile
+} = require('../controllers/userController');
+
+// Login route
+router.post('/login', loginUser);
+
+// Signup route
+router.post('/signup', signupUser);
 
 // Get user profile
-router.get('/profile', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
-    }
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+router.get('/profile', getUserProfile);
 
 // Delete user profile
-router.delete('/profile', auth, async (req, res) => {
-  try {
-    await User.findByIdAndRemove(req.user.id);
-    res.json({ msg: 'User profile deleted' });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+router.delete('/profile', deleteUserProfile);
 
 // Update user profile
-router.put('/profile', auth, async (req, res) => {
-  try {
-    const { firstName, lastName } = req.body;
-
-    // Retrieve user from database
-    const user = await User.findById(req.user.id);
-
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
-    }
-
-    // Update user details
-    if (firstName) user.firstName = firstName;
-    if (lastName) user.lastName = lastName;
-
-    // Save updated user details
-    await user.save();
-
-    res.json({ msg: 'User profile updated successfully', user });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+router.put('/profile',  updateUserProfile);
 
 module.exports = router;

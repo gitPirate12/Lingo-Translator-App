@@ -166,6 +166,7 @@
     "util": "^0.10.4",
     "util-deprecate": "^1.0.2",
     "utils-merge": "^1.0.1",
+    "validator": "^13.11.0",
     "vary": "^1.1.2",
     "webidl-conversions": "^7.0.0",
     "whatwg-fetch": "^3.6.2",

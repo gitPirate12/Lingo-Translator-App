@@ -1,0 +1,62 @@
+/* EmojiText.css */
+
+.emoji-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(73, 69, 69, 0.1);
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  font-size: 18px;
+}
+
+.emoji-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 120px); /* Adjust input width */
+}
+
+.search-button {
+  padding:10px 30px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.meaning-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.meaning-section {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.meaning-heading {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.meaning-content {
+  font-size: 16px;
+}
