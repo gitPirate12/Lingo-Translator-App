@@ -1,44 +1,28 @@
-const express = require('express')
+const express = require('express');
+const requireAuth = require('../middleware/requireAuth');
 const {
     getReplies,
-    createNestedReply,
     getReply,
     createReply,
     deleteReply,
     updateReply,
-    upvoteReply,
-    downvoteReply
-   
-} = require('../controllers/replyController')
+} = require('../controllers/replyController');
 
+const router = express.Router();
 
-const router = express.Router()
-
-// Get all repliess
-router.get('/', getReplies)
+// Get all replies
+router.get('/', getReplies);
 
 // Get a single reply
-router.get('/:id', getReply)
+router.get('/:id', getReply);
 
 // Post a new reply
-router.post('/', createReply)
-
-// Post a reply to an existing reply (nested reply)
-router.post('/:parentId', createNestedReply);
-
+router.post('/:postId/', requireAuth, createReply); // Applying requireAuth middleware
 
 // Delete a reply
-router.delete('/:id', deleteReply)
+router.delete('/:id', requireAuth, deleteReply); // Applying requireAuth middleware
 
 // Update a reply
-router.patch('/:id', updateReply)
+router.patch('/:id', requireAuth, updateReply); // Applying requireAuth middleware
 
-// Upvote a reply
-router.patch('/:id/upvote', upvoteReply);
-
-// Downvote a reply
-router.patch('/:id/downvote', downvoteReply);
-
-
-
-module.exports = router
+module.exports = router;

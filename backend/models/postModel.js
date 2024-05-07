@@ -6,24 +6,35 @@ const postSchema = new Schema({
     question: {
         type: String,
         required: true,
-    },
-    author: {
+      },
+      description: {
+        type: String,
+      },
+      author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "userInfoDetail",
-    },
-    replies: [{
-        type: mongoose.Schema.Types.ObjectId,
+        ref: "DiscussionUser",
+      },
+      replies: {
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "Reply",
-    }],
-    upvote: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "userInfoDetail",
-    }],
-    downvote: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "userInfoDetail",
-    }],
+        default: [],
+      },
+      tags: {
+        type: [String],
+        default: [],
+      },
+      upvote: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "DiscussionUser",
+        default: [],
+      },
+      downvote: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "DiscussionUser",
+        default: [],
+      },
+    
 }, { timestamps: true });
 
 module.exports = mongoose.model('Post', postSchema);
