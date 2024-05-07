@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import image_navlogo from "./NavImage/logo.jpg";
 import image1_userlogo from "./NavImage/user.png";
-import image_navlogo from "./NavImage/logo.png";
-import image1_userlogo from "./NavImage/user.png"; 
 import "./Navbar.css";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
 
 function Navbar() {
   const { logout } = useLogout();
@@ -25,12 +22,12 @@ function Navbar() {
   };
 
   return (
-    
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <div className="navbar-logo">
             <img src={image_navlogo} alt="App logo" />
+            <div className="navbar-title"><b>LINGO Translator</b></div>
           </div>
         </Link>
         <button
@@ -47,16 +44,6 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             {/* Your navigation links */}
-          <ul className="navbar-ul">
-            <li className="nav-item">
-              <Link to="/Rash_fade" className="nav-link">World Translator</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/emojiText" className="nav-link">Emoji-Text Translator</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/community" className="nav-link">Community</Link>
-            </li>
           </ul>
           <div className="navbar-profile">
             <div className="dropdown">

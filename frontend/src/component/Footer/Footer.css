@@ -1,6 +1,5 @@
 /* Footer.css */
 
-
 .footer {
   background-color: #131A2F;
   color: #fff;
@@ -48,32 +47,5 @@
   font-weight: bold;
   font-style: italic;
   font-size: 12px;
-#footer {
-    background-color: #0f1625;
-    color: #fff;
-    padding: 50px 0;
-  }
-  
-  .footer-logo {
-    width: 150px; /* Adjust size as needed */
-    height:auto;
-  }
-  
-  .footer-title {
-    color: #fff;
-  }
-  
-  .footer-list {
-    color: #ccc;
-  }
-  
-  .footer-social {
-    text-align: right; /* Align content to the right */
-  }
-  
-  .footer-social a {
-    color: #fff;
-    margin-left: 10px; /* Adjust spacing between social media icons */
-  }
   
 }
