@@ -2,6 +2,7 @@ const Post = require('../models/postModel')
 const mongoose = require('mongoose')
 
 
+
 //get all posts
 const getposts = async (req, res) => {
     try {

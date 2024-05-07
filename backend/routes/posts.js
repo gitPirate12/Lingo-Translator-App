@@ -1,4 +1,6 @@
-const express = require('express')
+const express = require('express');
+const router = express.Router();
+const requireAuth = require('../middleware/requireAuth');
 const {
     getposts,
     getPost,
@@ -6,26 +8,24 @@ const {
     deletePost,
     updatePost,
     updatePostVoteCount
-} = require('../controllers/postController')
-
-const router = express.Router()
+} = require('../controllers/postController');
 
 // Get all posts
-router.get('/', getposts)
+router.get('/', getposts);
 
 // Get a single post
-router.get('/:id', getPost)
+router.get('/:id', getPost);
 
 // Post a new post
-router.post('/', createPost)
+router.post('/', requireAuth, createPost); // Applying requireAuth middleware
 
 // Delete a post
-router.delete('/:id', deletePost)
+router.delete('/:id', requireAuth, deletePost); // Applying requireAuth middleware
 
 // Update a post
-router.patch('/:id', updatePost)
+router.patch('/:id', requireAuth, updatePost); // Applying requireAuth middleware
 
 // UpdateVoteCount of a post
-router.patch('/:id/vote', updatePostVoteCount)
+router.patch('/:id/vote', updatePostVoteCount);
 
-module.exports = router
+module.exports = router;

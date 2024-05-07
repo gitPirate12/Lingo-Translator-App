@@ -2,23 +2,35 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import image_navlogo from "./NavImage/logo.jpg";
 import image1_userlogo from "./NavImage/user.png";
+import image_navlogo from "./NavImage/logo.png";
+import image1_userlogo from "./NavImage/user.png"; 
 import "./Navbar.css";
+import { useLogout } from "../../hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 
 function Navbar() {
+  const { logout } = useLogout();
   const [activeLink, setActiveLink] = useState(""); // State to track active link
+  const {user} = useAuthContext();
 
   // Function to handle link click
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName === activeLink ? "" : linkName);
   };
 
+  // Function to handle logout
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
+    
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <div className="navbar-logo">
             <img src={image_navlogo} alt="App logo" />
-            <div className="navbar-title"><b>LINGO Translator</b></div>
           </div>
         </Link>
         <button
@@ -34,32 +46,16 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+            {/* Your navigation links */}
+          <ul className="navbar-ul">
             <li className="nav-item">
-              <Link
-                to="/Rash_fade"
-                className={`nav-link ${activeLink === "World Translator" ? "active" : ""}`}
-                onClick={() => handleLinkClick("World Translator")}
-              >
-                World Translator
-              </Link>
+              <Link to="/Rash_fade" className="nav-link">World Translator</Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/emojiText"
-                className={`nav-link ${activeLink === "Emoji-Text Translator" ? "active" : ""}`}
-                onClick={() => handleLinkClick("Emoji-Text Translator")}
-              >
-                Emoji-Text Translator
-              </Link>
+              <Link to="/emojiText" className="nav-link">Emoji-Text Translator</Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/community"
-                className={`nav-link ${activeLink === "Community" ? "active" : ""}`}
-                onClick={() => handleLinkClick("Community")}
-              >
-                Community
-              </Link>
+              <Link to="/community" className="nav-link">Community</Link>
             </li>
           </ul>
           <div className="navbar-profile">
@@ -74,8 +70,19 @@ function Navbar() {
                 <img src={image1_userlogo} alt="User photo" className="profile-image" />
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><Link className="dropdown-item" to="/user-profile">View User Profile</Link></li>
-                <li><Link className="dropdown-item" to="/logout">Log Out</Link></li>
+                {user && (
+                <div>
+                  <li><Link className="dropdown-item" to="/user-profile">View User Profile</Link></li>
+                  <li><button className="dropdown-item" onClick={handleLogout}>Log Out</button></li>
+                </div>
+                )}
+                {!user && (
+                <div>
+                  <li><Link className="dropdown-item" to="/login">Log In</Link></li>
+                  <li><Link className="dropdown-item" to="/signup">Sign Up</Link></li>  
+                </div>
+                )}
+                 
               </ul>
             </div>
           </div>
