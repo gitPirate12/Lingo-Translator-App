@@ -4,10 +4,12 @@ import image_navlogo from "./NavImage/logo.jpg";
 import image1_userlogo from "./NavImage/user.png";
 import "./Navbar.css";
 import { useLogout } from "../../hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 function Navbar() {
   const { logout } = useLogout();
   const [activeLink, setActiveLink] = useState(""); // State to track active link
+  const {user} = useAuthContext();
 
   // Function to handle link click
   const handleLinkClick = (linkName) => {
@@ -55,14 +57,18 @@ function Navbar() {
                 <img src={image1_userlogo} alt="User photo" className="profile-image" />
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {user && (
                 <div>
                   <li><Link className="dropdown-item" to="/user-profile">View User Profile</Link></li>
                   <li><button className="dropdown-item" onClick={handleLogout}>Log Out</button></li>
                 </div>
+                )}
+                {!user && (
                 <div>
                   <li><Link className="dropdown-item" to="/login">Log In</Link></li>
                   <li><Link className="dropdown-item" to="/signup">Sign Up</Link></li>  
                 </div>
+                )}
                  
               </ul>
             </div>

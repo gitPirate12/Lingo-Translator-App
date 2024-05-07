@@ -26,19 +26,19 @@ const loginUser = async (req, res) => {
 
 // Signup user
 const signupUser = async (req, res) => {
-    const {email, password} = req.body
-  
-    try {
-      const user = await User.signup(email, password)
+  const { email, password, firstName, lastName, city } = req.body;
+
+  try {
+      const user = await User.signup(email, password, firstName, lastName, city);
 
       // create a token
-      const token = createToken(user._id)
-  
-      res.status(200).json({email, token})
-    } catch (error) {
-      res.status(400).json({error: error.message})
-    }
+      const token = createToken(user._id);
+
+      res.status(200).json({ email, token , password, firstName, lastName, city});
+  } catch (error) {
+      res.status(400).json({ error: error.message });
   }
+}
   
   
 
@@ -69,28 +69,29 @@ const deleteUserProfile = async (req, res) => {
 
 // Update user profile
 const updateUserProfile = async (req, res) => {
-    try {
-        const { firstName, lastName } = req.body;
+  try {
+      const { firstName, lastName, city } = req.body;
 
-        // Retrieve user from database
-        const user = await User.findById(req.user.id);
+      // Retrieve user from database
+      const user = await User.findById(req.user.id);
 
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
 
-        // Update user details
-        if (firstName) user.firstName = firstName;
-        if (lastName) user.lastName = lastName;
+      // Update user details
+      if (firstName) user.firstName = firstName;
+      if (lastName) user.lastName = lastName;
+      if (city) user.city = city;
 
-        // Save updated user details
-        await user.save();
+      // Save updated user details
+      await user.save();
 
-        res.json({ msg: 'User profile updated successfully', user });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server Error');
-    }
+      res.json({ msg: 'User profile updated successfully', user });
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Server Error');
+  }
 };
 
 
