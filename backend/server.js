@@ -12,6 +12,7 @@ const ReplyRoutes = require('./routes/replies');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const emojiRouter = require('./routes/emoji');
+const CulturalRoutes = require('./routes/Cultural')
 
 // Initialize Express app
 const app = express();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use('api/cultural',CulturalRoutes);
 app.use('/api/posts', PostRoutes);
 app.use('/api/replies', ReplyRoutes);
 app.use('/api/auth', authRoutes);
