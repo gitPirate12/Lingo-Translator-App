@@ -58,8 +58,4 @@ function EmojiText() {
   );
 }
 
-<<<<<<< HEAD
 export default EmojiText;
-=======
-export default EmojiText;
->>>>>>> feature/heshan.s/emoji-text-translater
