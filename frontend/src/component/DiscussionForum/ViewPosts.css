@@ -1,0 +1,22 @@
+/* Ensure proper sizing and scrolling behavior */
+.view-posts-container {
+    height: calc(100vh - 150px); /* Adjust based on footer height */
+    overflow-y: auto;
+  }
+  
+  /* Adjust spacing */
+  .posts-list {
+    margin: 20px 0;
+  }
+  
+  /* Ensure proper spacing between individual posts */
+  .post-item {
+    margin-bottom: 20px;
+  }
+  
+  /* ViewPosts.css */
+
+.view-posts-container {
+    padding-bottom: 120px; /* Adjust as needed to create space for the footer */
+  }
+  

@@ -42,19 +42,19 @@ const signupUser = async (req, res) => {
   
   
 
-// Get user profile
-const getUserProfile = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id).select('-password');
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        res.json(user);
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server Error');
-    }
-};
+// // Get user profile
+// const getUserProfile = async (req, res) => {
+//     try {
+//         const user = await User.findById(req.user.id).select('-password');
+//         if (!user) {
+//             return res.status(404).json({ error: 'User not found' });
+//         }
+//         res.json(user);
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(500).send('Server Error');
+//     }
+// };
 
 // Delete user profile
 const deleteUserProfile = async (req, res) => {
@@ -94,11 +94,38 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+// Get all users
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+};
+
+// Get single user by ID
+const getUserById = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+}
+
 
 module.exports = {
     loginUser,
     signupUser,
-    getUserProfile,
+    getAllUsers,
+    getUserById,
     deleteUserProfile,
     updateUserProfile
 }

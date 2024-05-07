@@ -7,7 +7,8 @@ const User = require('../models/userModel');
 const {
     loginUser,
     signupUser,
-    getUserProfile,
+    getAllUsers,
+    getUserById,
     deleteUserProfile,
     updateUserProfile
 } = require('../controllers/userController');
@@ -17,9 +18,10 @@ router.post('/login', loginUser);
 
 // Signup route
 router.post('/signup', signupUser);
-
+//get all users
+router.get('/', getAllUsers);
 // Get user profile
-router.get('/profile', getUserProfile);
+router.get('/:id', getUserById);
 
 // Delete user profile
 router.delete('/profile', deleteUserProfile);

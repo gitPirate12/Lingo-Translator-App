@@ -8,34 +8,39 @@ const replySchema = new Schema({
         ref: 'Post',
         required: true
     },
-    username: {
-        type: String, // Assuming the author is identified by a username
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'userInfoDetail', // Reference to the user model collection
         required: true
     },
     comment: {
         type: String,
         required: true
     },
+    voteCount: {
+        type: Number,
+        default: 0
+    },
     replies: [{
-        username: {
-            type: String,
+        parentReply: {
+            type: Schema.Types.ObjectId,
+            ref: 'Reply', // Reference to the parent reply within the same model
             required: true
         },
-        commentID: {
+        author: {
             type: Schema.Types.ObjectId,
-            required: true 
+            ref: 'userInfoDetail', // Reference to the user model collection
+            required: true
         },
-        reply: {
+        comment: {
             type: String,
             required: true
         },
         createdAt: {
             type: Date,
-            default: new Date().getTime()
+            default: Date.now
         }
     }]
-    
-    
 }, { timestamps: true });
 
 module.exports = mongoose.model('Reply', replySchema);
