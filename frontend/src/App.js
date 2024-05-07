@@ -4,6 +4,9 @@ import Navbar from './component/Navbar/Navbar';
 import Footer from './component/Footer/Footer';
 import './component/Footer/FooterApp.css';
 
+//import Language translator
+import VoiceTrans from './component/Translator/translator'
+
 
 // emoji to text translater
 import Addemoji from './component/EmojiText/Addemoji';
@@ -25,12 +28,13 @@ function App() {
           {/* <Route path='/' element={<AllEmojiText />} /> */}
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/trans' element={<VoiceTrans />} />
           <Route path='/add' element={<Addemoji />} />
           <Route path='emojiText' element={<EmojiText />} />
         </Routes>
       </div>
+      
       {<Footer/>}
-
     </Router>
   );
 }
