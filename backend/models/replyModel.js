@@ -21,26 +21,17 @@ const replySchema = new Schema({
         type: Number,
         default: 0
     },
+    parentReplyId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Reply' // Reference to the parent reply within the same model
+    },
     replies: [{
-        parentReply: {
+        
             type: Schema.Types.ObjectId,
             ref: 'Reply', // Reference to the parent reply within the same model
             required: true
-        },
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: 'userInfoDetail', // Reference to the user model collection
-            required: true
-        },
-        comment: {
-            type: String,
-            required: true
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        }
-    }]
+        } 
+    ]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Reply', replySchema);

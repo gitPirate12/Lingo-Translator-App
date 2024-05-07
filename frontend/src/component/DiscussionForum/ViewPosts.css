@@ -17,6 +17,27 @@
   /* ViewPosts.css */
 
 .view-posts-container {
-    padding-bottom: 120px; /* Adjust as needed to create space for the footer */
+    padding-bottom: 300px; /* Adjust as needed to create space for the footer */
+    
+  }
+  
+  
+  .posts-list {
+    width: 50%; /* Adjust the width of the posts list */
+  }
+  
+  .post-item {
+    margin-bottom: 20px;
+  }
+  
+  .add-post-button {
+    width: 5%;
+    height: 25%; /* Adjust the width of the button */
+    margin-left: 1400px; /* Add some margin between the button and the posts list */
+    
+  }
+  
+  .action-button {
+    margin-right: 10px; /* Add some margin between action buttons */
   }
   

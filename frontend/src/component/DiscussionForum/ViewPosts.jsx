@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './ViewPosts.css'; // Import CSS file for styles
 
 function ViewPosts() {
   // State to store the fetched posts
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate function from useNavigate
 
   // Function to fetch posts from the server
   const fetchPosts = async () => {
@@ -15,11 +17,9 @@ function ViewPosts() {
         // Fetch author information using the author's ID
         try {
           const authorInfo = await axios.get(`http://localhost:3040/api/users/${post.author}`);
-          console.log( 'the post')
-          console.log( post._id)
+          
           // Fetch replies for the current post
           const repliesResponse = await axios.get(`http://localhost:3040/api/replies/post/${post._id}`);
-          console.log( repliesResponse.data)
           const replies = repliesResponse.data;
           
           return {
@@ -38,7 +38,6 @@ function ViewPosts() {
       setError(error.message || 'Error fetching posts');
     }
   };
-  
 
   // Fetch posts when the component mounts
   useEffect(() => {
@@ -51,8 +50,8 @@ function ViewPosts() {
 
   return (
     <div className="view-posts-container">
-      <h1>View Posts</h1>
-      {/* Render each post */}
+      {/* Use a button for Add Post */}
+      <button className="add-post-button" onClick={() => navigate('/addpost')}>Add Post</button>
       <div className="posts-list">
         {posts.map(post => (
           <div key={post._id} className="post-item">
@@ -65,14 +64,17 @@ function ViewPosts() {
             <h4>Replies:</h4>
             <ul>
               {post.replies.map(reply => (
-                <li key={reply._id}>{reply.comment}</li>
+                <li key={reply._id}>
+                  {/* Concatenate reply author's name with comment */}
+                  <p>{reply.author.firstName} {reply.author.lastName}: {reply.comment}</p>
+                </li>
               ))}
             </ul>
             {/* Add buttons for voting, editing, and deleting */}
-            <button>Vote Up</button>
-            <button>Vote Down</button>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button className="action-button">Vote Up</button>
+            <button className="action-button">Vote Down</button>
+            <button className="action-button">Edit</button>
+            <button className="action-button">Delete</button>
             <hr />
           </div>
         ))}
