@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^1.6.8",
     "emoji-picker-react": "^4.9.2",
+    "exceljs": "^4.4.0",
     "react": "",
     "react-dom": "",
     "react-router-dom": "",

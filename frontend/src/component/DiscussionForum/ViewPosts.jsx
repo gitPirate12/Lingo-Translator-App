@@ -6,12 +6,15 @@ import DeletePost from './DeletePost';
 import HandleVote from './HandleVote';
 import DeleteReply from './DeleteReply';
 import EditReply from './EditReply';
+import GenerateReport from './GenerateReport'; // Import the GenerateReport component
 import { useLogin } from '../../hooks/useLogin'; // Import the useLogin hook
 
 function ViewPosts() {
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [error, setError] = useState(null);
   const [editReplyId, setEditReplyId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const { isLoading, error: loginError } = useLogin(); // Use the useLogin hook to handle user login
 
@@ -90,6 +93,20 @@ function ViewPosts() {
     }
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() !== '') {
+      const filtered = posts.filter(post =>
+        post.author.toLowerCase().includes(query.toLowerCase()) ||
+        post.question.toLowerCase().includes(query.toLowerCase()) ||
+        post.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+      );
+      setFilteredPosts(filtered);
+    } else {
+      setFilteredPosts([]);
+    }
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -103,12 +120,17 @@ function ViewPosts() {
         <button className="add-post-button" onClick={() => navigate('/addpost')}>
           Add Post
         </button>
-        <button className="generate-report-button" onClick={() => console.log('Generate report clicked')}>
-          Generate Report
-        </button>
+        <GenerateReport /> {/* Render the GenerateReport component */}
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
       </div>
       <div className="posts-list">
-        {posts.map(post => (
+        {(searchQuery.trim() === '' ? posts : filteredPosts).map(post => (
           <div key={post._id} className="post-item">
             <h3>{post.question}</h3>
             <p>{post.description}</p>
