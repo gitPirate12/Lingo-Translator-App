@@ -7,7 +7,8 @@ const {
     createPost,
     deletePost,
     updatePost,
-    updatePostVoteCount
+    increaseVoteCount,
+    decreaseVoteCount
 } = require('../controllers/postController');
 
 // Get all posts
@@ -26,6 +27,11 @@ router.delete('/:id', requireAuth, deletePost); // Applying requireAuth middlewa
 router.patch('/:id', requireAuth, updatePost); // Applying requireAuth middleware
 
 // UpdateVoteCount of a post
-router.patch('/:id/vote', updatePostVoteCount);
+router.patch('/:id/increaseVoteCount',requireAuth, increaseVoteCount);
+
+// UpdateVoteCount of a post
+router.patch('/:id/decreaseVoteCount',requireAuth, decreaseVoteCount);
+
+    
 
 module.exports = router;

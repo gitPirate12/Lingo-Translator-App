@@ -44,6 +44,26 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             {/* Your navigation links */}
+            <li className={`nav-item ${activeLink === 'emoji' ? 'active' : ''}`}>
+            <Link 
+                className="nav-link"
+                onClick={() => handleLinkClick('emoji')}
+                to="/emojiText"
+                              >
+             Emoji to Text
+            </Link>
+            </li>
+            <li className={`nav-item ${activeLink === 'discussion' ? 'active' : ''}`}>
+            <Link 
+                className="nav-link"
+                onClick={() => handleLinkClick('discussion')}
+                to="/viewposts"
+                >
+                  Discussion Forum
+              </Link>
+            </li>
+
+            
           </ul>
           <div className="navbar-profile">
             <div className="dropdown">

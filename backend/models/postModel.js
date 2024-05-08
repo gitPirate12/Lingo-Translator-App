@@ -13,7 +13,7 @@ const postSchema = new Schema({
       author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "DiscussionUser",
+        ref: "userInfoDetail",
       },
       replies: {
         type: [mongoose.Schema.Types.ObjectId],
@@ -24,16 +24,15 @@ const postSchema = new Schema({
         type: [String],
         default: [],
       },
-      upvote: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "DiscussionUser",
-        default: [],
-      },
-      downvote: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "DiscussionUser",
-        default: [],
-      },
+      voteCount: {
+        type: Number,
+        default: 0,
+      }
+      
+
+      
+        
+      
     
 }, { timestamps: true });
 

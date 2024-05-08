@@ -13,6 +13,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Login from './component/Auth/Login';
 import Signup from './component/Auth/Signup';
+import ViewPosts from './component/DiscussionForum/ViewPosts';
+import AddPost from './component/DiscussionForum/AddPost';
+import EditPost from './component/DiscussionForum/EditPost';
+import AddReply from './component/DiscussionForum/AddReply';
+
 
 function App() {
   return (
@@ -27,6 +32,12 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/add' element={<Addemoji />} />
           <Route path='emojiText' element={<EmojiText />} />
+          <Route path='/viewposts' element={<ViewPosts />} />
+          <Route path='/addpost' element={<AddPost />} />
+          <Route path='/editpost/:postId' element={<EditPost />} />
+          <Route path='/addreply/:postId' element={<AddReply />} />
+          
+          
         </Routes>
       </div>
       {<Footer/>}
