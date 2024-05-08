@@ -43,8 +43,25 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-            {/* Your navigation links */}
-            <li className={`nav-item ${activeLink === 'emoji' ? 'active' : ''}`}>
+
+
+          {/* <li className="nav-link"> */}
+          <li className={`nav-link ${activeLink === 'traclater' ? 'active' : ''}`}>
+            <Link 
+                className="nav-link"
+                onClick={() => handleLinkClick('traclater')}
+                to="/traclater"
+                              >
+             Word Translator
+            </Link>
+            </li>
+
+   
+
+
+
+
+            <li className={`nav-link ${activeLink === 'emoji' ? 'active' : ''}`}>
             <Link 
                 className="nav-link"
                 onClick={() => handleLinkClick('emoji')}
@@ -53,7 +70,8 @@ function Navbar() {
              Emoji to Text
             </Link>
             </li>
-            <li className={`nav-item ${activeLink === 'discussion' ? 'active' : ''}`}>
+
+            <li className={`nav-link ${activeLink === 'discussion' ? 'active' : ''}`}>
             <Link 
                 className="nav-link"
                 onClick={() => handleLinkClick('discussion')}

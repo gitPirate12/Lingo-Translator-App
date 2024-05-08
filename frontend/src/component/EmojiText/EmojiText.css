@@ -2,14 +2,14 @@
   max-width: 600px;
   margin: 50px auto;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #b5d3ef;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .emoji-header {
   padding: 20px;
-  background-color: #007bff;
+  background-color: #170750;
   color: #ffffff;
   font-size: 24px;
   text-align: center;
