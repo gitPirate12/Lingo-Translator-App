@@ -70,7 +70,7 @@ function LanguageTranslator() {
                           setTranslatedText(qw);
                           }
                           else if(sliced == 'වද?'){
-                            word[x] = newWord.slice(0,-4)+'වැයි?';
+                            word[x] = newWord.slice(0,4)+'වැයි?';
                             console.log("new",word[x]); 
                             const qw = word.join(" ");
                           setTranslatedText(qw);
@@ -95,6 +95,12 @@ function LanguageTranslator() {
                           console.log("new",word[x]); 
                           const qw = word.join(" ");
                         setTranslatedText(qw);
+                        }
+                        else if(sliced == 'න්නද'){
+                          word[x] = newWord.slice(0,-4)+'න්නැයි?';
+                          console.log("new",word[x]); 
+                          const qw = word.join(" ");
+                        setTranslatedText(qw)
                         }
                       }
                   

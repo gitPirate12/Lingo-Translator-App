@@ -50,7 +50,7 @@ function Navbar() {
             <Link 
                 className="nav-link"
                 onClick={() => handleLinkClick('traclater')}
-                to="/traclater"
+                to="/trans"
                               >
              Word Translator
             </Link>
