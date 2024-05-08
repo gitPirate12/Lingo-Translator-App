@@ -1,9 +1,14 @@
 const Reply = require('../models/replyModel')
 const mongoose = require('mongoose')
+const requireAuth = require('../middleware/requireAuth')
+const Post = require('../models/postModel')
+
+
 
 
 //get all replies
 const getReplies = async (req, res) => {
+  
     try {
         const replies = await Reply.find({}).sort({ createdAt: -1 });
         res.status(200).json(replies);
@@ -30,21 +35,57 @@ const getReply = async(req,res) =>{
     res.status(200).json(reply)
 }
 
-//create new reply 
 
-const createReply = async (req, res) =>{
-    const {author, content,parentPost} = req.body
 
-    //add doc to db
-    try {
-        const reply = await Reply.create({author, content,parentPost})
-        res.status(200).json(reply)
-      } catch (error) {
-        console.error('Error creating reply:', error);
-        res.status(400).json({error: error.message})
-        
+const createReply = async (req, res) => {
+  // Get author from authenticated user
+  const author = req.user._id;
+  // Destructure other fields from request body
+  const { comment, parentid, parentReplyId } = req.body;
+
+  try {
+    // Create new reply with author from req.user
+    const reply = await Reply.create({
+      author,
+      comment,
+      parentid,
+      parentReplyId  // Include parent reply ID in the new reply
+    });
+
+
+
+    // Get ID of new reply
+    const replyId = reply._id;
+
+    // If the new reply has a parent reply, find and update the parent reply's replies array
+    if (parentReplyId) {
+      const parentReply = await Reply.findById(parentReplyId);
+      if (!parentReply) {
+        return res.status(404).json({ error: 'Parent reply not found' });
       }
-}
+      parentReply.replies.push(replyId);
+      await parentReply.save();
+    }
+
+    // If the new reply has a parent post, find and update the parent post's replies array
+    if (parentid) {
+      const post = await Post.findById(parentid);
+      if (!post) {
+        return res.status(404).json({ error: 'Parent post not found' });
+      }
+      post.replies.push(replyId);
+      await post.save();
+    }
+
+    res.status(201).json(reply);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
 
 //delete a reply
 
@@ -83,54 +124,139 @@ const updateReply = async(req,res) =>{
 }
 
 const updateReplyVoteCount = async (req, res) => {
+
+    const { id } = req.params;
+  
     try {
-        // Extract the post ID from the request parameters
-        const { id } = req.params;
-        // Extract the action (upvote or downvote) from the request body
-        const { action } = req.body;
-
-        // Check if the received ID is a valid MongoDB ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(404).json({ error: 'No such reply' });
-        }
-
-        // Define an update query object
-        let updateQuery = {};
-
-        // Determine the action to be performed based on the request body
-        if (action === 'upvote') {
-            // If the action is upvote, increment the voteCount by 1
-            updateQuery = { $inc: { voteCount: 1 } };
-        } else if (action === 'downvote') {
-            // If the action is downvote, decrement the voteCount by 1
-            updateQuery = { $inc: { voteCount: -1 } };
-        } else {
-            // If the action is neither upvote nor downvote, return a 400 error
-            return res.status(400).json({ error: 'Invalid action' });
-        }
-
-        // Ensure voteCount never goes below 0
-        updateQuery.$min = { voteCount: 0 };
-
-        // Find and update the post in the database based on the provided ID and update query
-        const updateReplyVoteCount = await Reply.findByIdAndUpdate(
-            id,// Post ID
-            updateQuery,// Update query
-            { new: true }// Return the updated post after the update operation
-        );
-
-        // If no post is found with the provided ID, return a 404 error
-        if (!updateReplyVoteCount) {
-            return res.status(404).json({ error: 'No such reply' });
-        }
-
-        // If the update operation is successful, return the updated post with a 200 status
-        res.status(200).json(updateReplyVoteCount);
+  
+      let updateQuery = {};
+  
+      if(req.originalUrl.includes('upvote')) {
+        updateQuery = { $inc: {voteCount: 1} };
+      }
+  
+      if(req.originalUrl.includes('downvote')) {  
+        updateQuery = { $inc: {voteCount: -1} };
+      }
+  
+      const updatedReply = await Reply.findByIdAndUpdate(id, updateQuery, {new: true});
+  
+      res.status(200).json(updatedReply);
+  
     } catch (error) {
-        // If an error occurs during the execution of the function, return a 500 error
+      // error handling
+    }
+  
+  }
+
+  const getRepliesByPostId = async (req, res) => {
+    const { postId } = req.params;
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(postId)) {
+            return res.status(404).json({ error: 'Invalid post ID' });
+        }
+
+        // Find the post by its ID and populate the 'replies' field with 'author' information
+        const post = await Post.findById(postId).populate({
+            path: 'replies',
+            populate: {
+                path: 'author',
+                model: 'userInfoDetail'
+            }
+        });
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        res.status(200).json(post.replies);
+    } catch (error) {
+        console.error('Error fetching replies:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+const createNestedReply = async (req, res) => {
+  // Get author from authenticated user
+  const author = req.user._id;
+  // Destructure postId, parentReplyId, and other fields from request params and body
+  const { postId, parentReplyId } = req.params;
+  const { comment } = req.body;
+
+  try {
+    // Check if postId is valid
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      return res.status(404).json({ error: 'Invalid post ID' });
+    }
+
+    // Check if parentReplyId is valid
+    if (parentReplyId && !mongoose.Types.ObjectId.isValid(parentReplyId)) {
+      return res.status(404).json({ error: 'Invalid parent reply ID' });
+    }
+
+    // Create new reply with author and other fields
+    const reply = await Reply.create({
+      author,
+      comment,
+      parentid: postId,
+      parentReplyId // Include parent reply ID in the new reply
+    });
+
+    // Get ID of new reply
+    const replyId = reply._id;
+
+    // If the new reply has a parent reply, find and update the parent reply's replies array
+    if (parentReplyId) {
+      const parentReply = await Reply.findById(parentReplyId);
+      if (!parentReply) {
+        return res.status(404).json({ error: 'Parent reply not found' });
+      }
+      parentReply.replies.push(replyId);
+      await parentReply.save();
+    }
+
+    // If the new reply has a parent post, find and update the parent post's replies array
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Parent post not found' });
+    }
+    post.replies.push(replyId);
+    await post.save();
+
+    res.status(201).json(reply);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getNestedReplies = async (replyId) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(replyId)) {
+      throw new Error('Invalid reply ID');
+    }
+
+    const reply = await Reply.findById(replyId).populate({
+      path: 'replies',
+      populate: {
+        path: 'author',
+        model: 'userInfoDetail'
+      }
+    });
+
+    if (!reply) {
+      throw new Error('Reply not found');
+    }
+
+    return reply.replies;
+  } catch (error) {
+    console.error('Error fetching nested replies:', error);
+    throw new Error('Internal Server Error');
+  }
+};
+
+
 
 
 module.exports = {
@@ -139,5 +265,8 @@ module.exports = {
     createReply,
     deleteReply,
     updateReply,
-    updateReplyVoteCount
+    updateReplyVoteCount,
+    getRepliesByPostId,
+    createNestedReply,
+    getNestedReplies
 }

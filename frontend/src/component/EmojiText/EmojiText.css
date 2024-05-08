@@ -2,14 +2,14 @@
   max-width: 600px;
   margin: 50px auto;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #b5d3ef;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .emoji-header {
   padding: 20px;
-  background-color: #007bff;
+  background-color: #170750;
   color: #ffffff;
   font-size: 24px;
   text-align: center;
@@ -23,7 +23,7 @@
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #410844;
   border-radius: 5px;
   resize: none;
   margin-bottom: 10px;
@@ -49,6 +49,7 @@
 .meanings-container {
   display: flex;
   justify-content: space-between;
+
 }
 
 .meaning-box {
@@ -56,6 +57,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  border: 1px solid #410844;
+
 }
 
 .meaning-heading {
