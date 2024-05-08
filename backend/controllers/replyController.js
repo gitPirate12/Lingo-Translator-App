@@ -52,6 +52,8 @@ const createReply = async (req, res) => {
       parentReplyId  // Include parent reply ID in the new reply
     });
 
+
+
     // Get ID of new reply
     const replyId = reply._id;
 
@@ -175,6 +177,86 @@ const updateReplyVoteCount = async (req, res) => {
     }
 };
 
+const createNestedReply = async (req, res) => {
+  // Get author from authenticated user
+  const author = req.user._id;
+  // Destructure postId, parentReplyId, and other fields from request params and body
+  const { postId, parentReplyId } = req.params;
+  const { comment } = req.body;
+
+  try {
+    // Check if postId is valid
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      return res.status(404).json({ error: 'Invalid post ID' });
+    }
+
+    // Check if parentReplyId is valid
+    if (parentReplyId && !mongoose.Types.ObjectId.isValid(parentReplyId)) {
+      return res.status(404).json({ error: 'Invalid parent reply ID' });
+    }
+
+    // Create new reply with author and other fields
+    const reply = await Reply.create({
+      author,
+      comment,
+      parentid: postId,
+      parentReplyId // Include parent reply ID in the new reply
+    });
+
+    // Get ID of new reply
+    const replyId = reply._id;
+
+    // If the new reply has a parent reply, find and update the parent reply's replies array
+    if (parentReplyId) {
+      const parentReply = await Reply.findById(parentReplyId);
+      if (!parentReply) {
+        return res.status(404).json({ error: 'Parent reply not found' });
+      }
+      parentReply.replies.push(replyId);
+      await parentReply.save();
+    }
+
+    // If the new reply has a parent post, find and update the parent post's replies array
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Parent post not found' });
+    }
+    post.replies.push(replyId);
+    await post.save();
+
+    res.status(201).json(reply);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getNestedReplies = async (replyId) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(replyId)) {
+      throw new Error('Invalid reply ID');
+    }
+
+    const reply = await Reply.findById(replyId).populate({
+      path: 'replies',
+      populate: {
+        path: 'author',
+        model: 'userInfoDetail'
+      }
+    });
+
+    if (!reply) {
+      throw new Error('Reply not found');
+    }
+
+    return reply.replies;
+  } catch (error) {
+    console.error('Error fetching nested replies:', error);
+    throw new Error('Internal Server Error');
+  }
+};
+
+
 
 
 module.exports = {
@@ -184,5 +266,7 @@ module.exports = {
     deleteReply,
     updateReply,
     updateReplyVoteCount,
-    getRepliesByPostId
+    getRepliesByPostId,
+    createNestedReply,
+    getNestedReplies
 }

@@ -6,7 +6,9 @@ const {
     createReply,
     deleteReply,
     updateReplyVoteCount ,
-    getRepliesByPostId
+    getRepliesByPostId,
+    createNestedReply,
+    getNestedReplies
 } = require('../controllers/replyController');
 
 const router = express.Router();
@@ -20,8 +22,12 @@ router.get('/:id', getReply);
 // Get  reply by post id
 router.get('/post/:postId', getRepliesByPostId);
 
+router.get('/nested/:replyId', getNestedReplies);
+
 // Post a new reply
 router.post('/', requireAuth, createReply); // Applying requireAuth middleware
+// Post a new nested reply
+router.post('/:postId/:parentReplyId', requireAuth, createNestedReply); // Applying requireAuth middleware
 
 // Delete a reply
 router.delete('/:id', requireAuth, deleteReply); // Applying requireAuth middleware

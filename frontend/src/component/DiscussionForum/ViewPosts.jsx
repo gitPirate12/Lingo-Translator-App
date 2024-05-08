@@ -5,6 +5,7 @@ import './ViewPosts.css'; // Import CSS file for styles
 import DeletePost from './DeletePost'; // Import DeletePost component
 import HandleVote from './HandleVote'; // Import HandleVote component
 
+
 function ViewPosts() {
   // State to store the fetched posts
   const [posts, setPosts] = useState([]);
@@ -61,18 +62,23 @@ function ViewPosts() {
     navigate(`/editpost/${postId}`); // Redirect to the edit post page
   };
 
+  const handleAddReply = (postId) => {
+    navigate(`/addreply/${postId}`); // Redirect to the add reply page with postId
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
-    
     <div className="view-posts-container">
-        <div>
-            <h1>Discussion forum</h1>
-            </div>
+      <div>
+        <h1>Discussion forum</h1>
+      </div>
       {/* Use a button for Add Post */}
-      <button className="add-post-button" onClick={() => navigate('/addpost')}>Add Post</button>
+      <button className="add-post-button" onClick={() => navigate('/addpost')}>
+        Add Post
+      </button>
       <div className="posts-list">
         {posts.map(post => (
           <div key={post._id} className="post-item">
@@ -81,13 +87,14 @@ function ViewPosts() {
             <p>Author: {post.author}</p>
             <p>Tags: {post.tags.join(', ')}</p>
             <p>Vote Count: {post.voteCount}</p>
-            
             {/* Add buttons for voting, editing, and deleting */}
             <HandleVote postId={post._id} type="up" />
             <HandleVote postId={post._id} type="down" />
-            <button className="action-button" onClick={() => handleEdit(post._id)}>Edit</button>
-            {/* Use DeletePost component for deleting */}
+            <button className="action-button" onClick={() => handleEdit(post._id)}>
+              Edit
+            </button>
             <DeletePost postId={post._id} onDelete={() => handleDelete(post._id)} />
+            <button onClick={() => handleAddReply(post._id)}>Add Reply</button>
             {/* Render replies */}
             <h4>Replies:</h4>
             <ul>
@@ -95,6 +102,12 @@ function ViewPosts() {
                 <li key={reply._id}>
                   {/* Concatenate reply author's name with comment */}
                   <p>{reply.author.firstName} {reply.author.lastName}: {reply.comment}</p>
+                  {/* Add buttons for editing, deleting, upvoting, downvoting, and adding a reply */}
+                  <button>Delete Reply</button>
+                  <button>Edit Reply</button>
+                  <button>Delete Reply</button>
+                  <HandleVote replyId={reply._id} type="up" />
+                  <HandleVote replyId={reply._id} type="down" />
                 </li>
               ))}
             </ul>
