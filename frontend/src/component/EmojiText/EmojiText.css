@@ -23,7 +23,7 @@
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #410844;
   border-radius: 5px;
   resize: none;
   margin-bottom: 10px;
@@ -49,6 +49,7 @@
 .meanings-container {
   display: flex;
   justify-content: space-between;
+
 }
 
 .meaning-box {
@@ -56,6 +57,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  border: 1px solid #410844;
+
 }
 
 .meaning-heading {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './EmojiText.css';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 
 function EmojiText() {
   const [emoji, setEmojiInput] = useState('');
@@ -36,28 +37,33 @@ function EmojiText() {
     }
   };
 
-  return (
-    <div className="emoji-card">
-      <div className="emoji-header">
-        Emoji to Text Translator
-      </div>
-      <div className="emoji-body">
-        <textarea
-          id="emoji"
-          value={emoji}
-          onChange={handleInputChange}
-          placeholder="Enter emoji here..."
-          className="emoji-input"
-        />
-        <button onClick={handleSearch} className="search-button">Translate</button>
-        <div className="meanings-container">
-          <div className="meaning-box">
-            <div className="meaning-heading">English</div>
-            <div className="meaning-content">{meaningEng}</div>
-          </div>
-          <div className="meaning-box">
-            <div className="meaning-heading">Sinhala</div>
-            <div className="meaning-content">{meaningSin}</div>
+  return ( 
+    <div className='application'>
+      <Helmet>
+        <style>{'body { background-color: #9ac7f1; }'}</style>
+      </Helmet>
+      <div className="emoji-card">
+        <div className="emoji-header">
+          Emoji to Text Translator
+        </div>
+        <div className="emoji-body">
+          <textarea
+            id="emoji"
+            value={emoji}
+            onChange={handleInputChange}
+            placeholder="Enter emoji here..."
+            className="emoji-input"
+          />
+          <button onClick={handleSearch} className="search-button">Translate</button>
+          <div className="meanings-container">
+            <div className="meaning-box">
+              <div className="meaning-heading">English</div>
+              <div className="meaning-content">{meaningEng}</div>
+            </div>
+            <div className="meaning-box">
+              <div className="meaning-heading">Sinhala</div>
+              <div className="meaning-content">{meaningSin}</div>
+            </div>
           </div>
         </div>
       </div>
