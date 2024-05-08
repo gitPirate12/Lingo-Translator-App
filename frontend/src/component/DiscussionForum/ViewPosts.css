@@ -33,11 +33,43 @@
   .add-post-button {
     width: 5%;
     height: 25%; /* Adjust the width of the button */
-    margin-left: 1400px; /* Add some margin between the button and the posts list */
+    margin-left: 1300px; /* Add some margin between the button and the posts list */
     
   }
   
   .action-button {
     margin-right: 10px; /* Add some margin between action buttons */
+  }
+  
+ 
+  
+ 
+  
+  
+  
+  .generate-report-button {
+    margin-left: 1100px; /* Add some margin between the button and the posts list */
+    
+    width: 5%;
+    height: 25%; /* Adjust the width of the button */
+  }
+  
+  .button-container {
+    display: flex; /* Use flexbox to align items */
+    margin-left: 1000px;
+  }
+  
+  .add-post-button,
+  .generate-report-button {
+    width: 30%;
+    height: 25%;
+  }
+  
+  .add-post-button {
+    margin-left: 130px; /* Adjust the margin between the button and the posts list */
+  }
+  
+  .generate-report-button {
+    margin-left: 20px; /* Adjust the margin between the buttons */
   }
   

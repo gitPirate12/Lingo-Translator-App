@@ -17,6 +17,7 @@ import ViewPosts from './component/DiscussionForum/ViewPosts';
 import AddPost from './component/DiscussionForum/AddPost';
 import EditPost from './component/DiscussionForum/EditPost';
 import AddReply from './component/DiscussionForum/AddReply';
+import EditReply from './component/DiscussionForum/EditReply';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/addpost' element={<AddPost />} />
           <Route path='/editpost/:postId' element={<EditPost />} />
           <Route path='/addreply/:postId' element={<AddReply />} />
+          <Route path='/editreply/:replyId' element={<EditReply />} />
           
           
         </Routes>

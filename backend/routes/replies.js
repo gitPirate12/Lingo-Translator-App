@@ -8,7 +8,8 @@ const {
     updateReplyVoteCount ,
     getRepliesByPostId,
     createNestedReply,
-    getNestedReplies
+    getNestedReplies,
+    updateReply
 } = require('../controllers/replyController');
 
 const router = express.Router();
@@ -37,5 +38,7 @@ router.patch('/:id/upvote', requireAuth, updateReplyVoteCount);
 
 // Downvote reply
 router.patch('/:id/downvote', requireAuth, updateReplyVoteCount);
+
+router.patch('/:id', requireAuth, updateReply);
 
 module.exports = router;

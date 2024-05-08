@@ -13,17 +13,21 @@ function DeleteReply({ replyId }) {
         // If user is not logged in, redirect to login page or display a message
         return;
       }
+      
 
       // Attach the authentication token to the request headers
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
+       
       };
-
+      
+      
       // Send DELETE request to delete the reply
       await axios.delete(`http://localhost:3040/api/replies/${replyId}`, config);
       
+
       // Optionally, you can handle success or display a message
       // Reload the page to fetch the latest data
       window.location.reload();
