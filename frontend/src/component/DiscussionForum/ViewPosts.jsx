@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './ViewPosts.css'; // Import CSS file for styles
 import DeletePost from './DeletePost'; // Import DeletePost component
+import HandleVote from './HandleVote'; // Import HandleVote component
 
 function ViewPosts() {
   // State to store the fetched posts
@@ -56,12 +57,20 @@ function ViewPosts() {
     }
   };
 
+  const handleEdit = (postId) => {
+    navigate(`/editpost/${postId}`); // Redirect to the edit post page
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
+    
     <div className="view-posts-container">
+        <div>
+            <h1>Discussion forum</h1>
+            </div>
       {/* Use a button for Add Post */}
       <button className="add-post-button" onClick={() => navigate('/addpost')}>Add Post</button>
       <div className="posts-list">
@@ -72,6 +81,13 @@ function ViewPosts() {
             <p>Author: {post.author}</p>
             <p>Tags: {post.tags.join(', ')}</p>
             <p>Vote Count: {post.voteCount}</p>
+            
+            {/* Add buttons for voting, editing, and deleting */}
+            <HandleVote postId={post._id} type="up" />
+            <HandleVote postId={post._id} type="down" />
+            <button className="action-button" onClick={() => handleEdit(post._id)}>Edit</button>
+            {/* Use DeletePost component for deleting */}
+            <DeletePost postId={post._id} onDelete={() => handleDelete(post._id)} />
             {/* Render replies */}
             <h4>Replies:</h4>
             <ul>
@@ -82,12 +98,6 @@ function ViewPosts() {
                 </li>
               ))}
             </ul>
-            {/* Add buttons for voting, editing, and deleting */}
-            <button className="action-button">Vote Up</button>
-            <button className="action-button">Vote Down</button>
-            <button className="action-button">Edit</button>
-            {/* Use DeletePost component for deleting */}
-            <DeletePost postId={post._id} onDelete={() => handleDelete(post._id)} />
             <hr />
           </div>
         ))}

@@ -15,6 +15,7 @@ import Login from './component/Auth/Login';
 import Signup from './component/Auth/Signup';
 import ViewPosts from './component/DiscussionForum/ViewPosts';
 import AddPost from './component/DiscussionForum/AddPost';
+import EditPost from './component/DiscussionForum/EditPost';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path='emojiText' element={<EmojiText />} />
           <Route path='/viewposts' element={<ViewPosts />} />
           <Route path='/addpost' element={<AddPost />} />
+          <Route path='/editpost/:postId' element={<EditPost />} />
         </Routes>
       </div>
       {<Footer/>}
