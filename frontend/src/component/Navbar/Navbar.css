@@ -1,34 +1,20 @@
 /* Navbar.css */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-
 
 .navbar {
-  background-color: #0f1625;
-  height: 70px;
+  background-color: #1F3D98;
+  height: 100px;
 }
 
 .navbar-logo {
-  margin-left: 30px;
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
-.navbar-ul{
-  font-weight:bold;
-  font-size:medium;
-  margin-left: 50px;
-  margin-top: 1%;
-  color: #d4dfff;
-  margin-right: 100px;
-  gap: 40px;
-  display:flex;
-  list-style: none;
-  font-family: 'Quicksand',sans-serif;
 
-}
 .navbar-logo img {
   margin-bottom: 5px;
-  width: 150px;
-  height: 40px;
+  width: 200px;
+  height: 60px;
 }
 
 .navbar-title {
@@ -38,16 +24,13 @@
 
 .navbar-nav {
   margin: 20px;
-  gap: 10px;
+  gap: 120px;
 }
 
 .navbar-nav .nav-link {
   color: #fff; /* Keep text color as white */
-  color: #fd0909;
-  font-family:Arial, Helvetica, sans-serif;
   font-weight: bold;
-
-  
+  position: relative;
 }
 
 .navbar-nav .nav-link:hover {
@@ -76,16 +59,14 @@
 
 /* Styling for profile dropdown */
 .navbar-profile {
-  display:inline-flex;
-  align-items:flex-end;
-  margin-left: 25%;
-  margin-right: 5%;
-  
+  display: flex;
+  align-items: center;
 }
 
 .profile-image {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 
 .dropdown-menu {

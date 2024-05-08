@@ -1,3 +1,4 @@
+
 .rec_item{
   width:100%;
   height: 300px;
@@ -5,6 +6,7 @@
   border-radius: 10px;
   border-style: solid;
   border-width:1.5px;
+  margin-bottom: 100px;
   
 }
 #textInOut{
@@ -56,10 +58,20 @@
     opacity: 90%;
   }
   .translateBtn{
+    margin-top: 20px;
+    margin-bottom: 10px;
     color:antiquewhite;
     background-color:#2b3347 ;
     display: -ms-inline-grid;
     margin-inline: 45px;
     width: 180px;
     height:30px;
+    border-radius:6px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  .head1{
+    margin-top: 20px;
+    font-size: larger;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+
   }
