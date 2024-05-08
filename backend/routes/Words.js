@@ -4,10 +4,6 @@ const Words = require("../models/words")
 
 router.post("/add",async(req,res)=>{
     
-    /*const{token} = req.cookies
-    jwt.verify(token,secret,{},async(err,info)=>{
-     if(err) throw err })*/
- 
      const{GalleWord} = req.body
     const WordDoc = await Words.create({
      GalleWord
