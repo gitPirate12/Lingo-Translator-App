@@ -31,7 +31,7 @@ router.post('/', requireAuth, createReply); // Applying requireAuth middleware
 router.post('/:postId/:parentReplyId', requireAuth, createNestedReply); // Applying requireAuth middleware
 
 // Delete a reply
-router.delete('/:id', requireAuth, deleteReply); // Applying requireAuth middleware
+router.delete('/:id', deleteReply); // Applying requireAuth middleware
 
 // Upvote reply
 router.patch('/:id/upvote', requireAuth, updateReplyVoteCount);

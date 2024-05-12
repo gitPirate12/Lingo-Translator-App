@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLogin } from '../../hooks/useLogin'; // Import the useLogin hook
+import { Typography, TextField, Button, Box } from '@mui/material';
+import { Send, ArrowBack } from '@mui/icons-material';
 
 function AddPost() {
   const { login } = useLogin(); // Use the useLogin hook to handle user login
@@ -49,43 +51,43 @@ function AddPost() {
   };
 
   return (
-    <div>
-      <h2>Add New Post</h2>
-      {error && <div>Error: {error}</div>}
+    <Box className='Addpost' style={{ minHeight: '100vh', padding: '20px' }}>
+      <Typography variant="h4" gutterBottom>Add New Post</Typography>
+      {error && <Typography variant="body1" color="error">Error: {error}</Typography>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="question">Question:</label>
-          <input
-            type="text"
-            id="question"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-        </div>
-        <div>
-          <label htmlFor="tags">Tags:</label>
-          <input
-            type="text"
-            id="tags"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-          />
-          <small>Separate tags with commas (e.g., tag1, tag2, tag3)</small>
-        </div>
-        <button type="submit">Submit</button>
+        <TextField
+          fullWidth
+          label="Question"
+          id="question"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          required
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          label="Description"
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Tags"
+          id="tags"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+          helperText="Separate tags with commas (e.g., tag1, tag2, tag3)"
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary"  sx={{ marginRight: '30px' }}>Submit</Button>
         {/* Add button to redirect to ViewPosts page */}
-        <button onClick={() => { window.location.href = '/viewposts' }}>Back</button>
+        <Button onClick={() => { window.location.href = '/viewposts' }} variant="outlined" startIcon={<ArrowBack />}>Back</Button>
       </form>
-    </div>
+    </Box>
   );
 }
 

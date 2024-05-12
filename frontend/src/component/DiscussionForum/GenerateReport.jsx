@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import exceljs from 'exceljs'; // Import exceljs library
+import exceljs from 'exceljs';
+import { Button, CircularProgress } from '@mui/material'; // Import Button and CircularProgress from Material-UI
 
 function GenerateReport() {
   const [loading, setLoading] = useState(false);
@@ -8,23 +9,18 @@ function GenerateReport() {
   const generateExcelReport = async () => {
     setLoading(true);
     try {
-      // Fetch posts data from the server
       const response = await axios.get('http://localhost:3040/api/posts/');
       const posts = response.data;
 
-      // Create a new Excel workbook
       const workbook = new exceljs.Workbook();
       const worksheet = workbook.addWorksheet('Posts');
 
-      // Add headers to the worksheet
       worksheet.addRow(['ID', 'Question', 'Description', 'Author', 'Tags', 'Vote Count']);
 
-      // Add post data to the worksheet
       posts.forEach(post => {
         worksheet.addRow([post._id, post.question, post.description, post.author, post.tags.join(', '), post.voteCount]);
       });
 
-      // Save the workbook as an Excel file
       const buffer = await workbook.xlsx.writeBuffer();
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
@@ -41,9 +37,9 @@ function GenerateReport() {
 
   return (
     <div>
-      <button onClick={generateExcelReport} disabled={loading}>
+      <Button onClick={generateExcelReport} disabled={loading} variant="contained" startIcon={loading ? <CircularProgress size={20} /> : null}>
         {loading ? 'Generating...' : 'Generate Excel Report'}
-      </button>
+      </Button>
     </div>
   );
 }

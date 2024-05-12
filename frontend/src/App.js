@@ -18,12 +18,13 @@ import AddPost from './component/DiscussionForum/AddPost';
 import EditPost from './component/DiscussionForum/EditPost';
 import AddReply from './component/DiscussionForum/AddReply';
 import EditReply from './component/DiscussionForum/EditReply';
+import './App.css';
 
 
 function App() {
   return (
     <Router>
-      <div>
+      <div className='App'>
         { <Navbar /> }
         <Routes>
           {/* {emoji to text translater} */}
@@ -39,10 +40,11 @@ function App() {
           <Route path='/addreply/:postId' element={<AddReply />} />
           <Route path='/editreply/:replyId' element={<EditReply />} />
           
-          
+         
         </Routes>
+        <Footer/>
       </div>
-      {<Footer/>}
+      
 
     </Router>
   );

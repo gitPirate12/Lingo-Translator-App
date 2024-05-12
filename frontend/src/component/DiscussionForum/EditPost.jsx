@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate and useParams hooks
 import { useLogin } from '../../hooks/useLogin'; // Import the useLogin hook
+import { Typography, TextField, Button, Box } from '@mui/material'; // Import Material UI components
 
 function EditPost() {
   const navigate = useNavigate(); // Initialize navigate function from useNavigate
@@ -75,7 +76,7 @@ function EditPost() {
       // Optionally, you can handle success or display a message
 
       // Redirect to view post page after successful update
-      navigate('/viewpost');
+      navigate('/viewposts');
     } catch (error) {
       // Log any errors that occur during form submission
       console.error('Error updating post:', error);
@@ -84,43 +85,41 @@ function EditPost() {
   };
 
   return (
-    <div>
-      <h2>Edit Post</h2>
-      {error && <div>Error: {error}</div>}
+    <Box className='EditPost' minHeight="100vh" padding="20px">
+      <Typography variant="h4" sx={{ mb: 2 }}>Edit Post</Typography>
+      {error && <Typography color="error">Error: {error}</Typography>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="question">Question:</label>
-          <input
-            type="text"
-            id="question"
-            value={question}
-            onChange={handleQuestionChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-          ></textarea>
-        </div>
-        <div>
-          <label htmlFor="tags">Tags:</label>
-          <input
-            type="text"
-            id="tags"
-            value={tags}
-            onChange={handleTagsChange}
-          />
-          <small>Separate tags with commas (e.g., tag1, tag2, tag3)</small>
-        </div>
-        <button type="submit">Save Changes</button>
+        <TextField
+          fullWidth
+          label="Question"
+          value={question}
+          onChange={handleQuestionChange}
+          required
+          sx={{ mb: 2 }} // Add margin bottom
+        />
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          label="Description"
+          value={description}
+          onChange={handleDescriptionChange}
+          required
+          sx={{ mb: 2 }} // Add margin bottom
+        />
+        <TextField
+          fullWidth
+          label="Tags"
+          value={tags}
+          onChange={handleTagsChange}
+          helperText="Separate tags with commas (e.g., tag1, tag2, tag3)"
+          sx={{ mb: 2 }} // Add margin bottom
+        />
+        <Button type="submit" variant="contained">Save Changes</Button>
       </form>
       {/* Button to go back to view post page */}
-      <button onClick={() => navigate('/viewposts')}>Back</button>
-    </div>
+      <Button onClick={() => navigate('/viewposts')} sx={{ mt: 2 }}>Back</Button>
+    </Box>
   );
 }
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { useLogin } from '../../hooks/useLogin'; // Import the useLogin hook
+import { Button } from '@mui/material'; // Import Button component from Material-UI
+import { ThumbUp, ThumbDown } from '@mui/icons-material'; // Import icons for voting
 
 function HandleVote({ postId, type }) {
   const { isLoading, error, login } = useLogin(); // Get login function, loading state, and error from the useLogin hook
@@ -68,7 +70,16 @@ function HandleVote({ postId, type }) {
 
   return (
     <div>
-      <button onClick={() => handleVote(type)}>Vote {type === 'up' ? 'Up' : 'Down'}</button>
+      {/* Use icons for voting */}
+      <Button
+        variant="contained"
+        color="primary" // Use primary color for the button
+        onClick={() => handleVote(type)}
+        startIcon={type === 'up' ? <ThumbUp /> : <ThumbDown />} // Use ThumbUp icon for upvote, ThumbDown icon for downvote
+      >
+        {/* Display dynamic text based on the vote type */}
+        {type === 'up' ? 'Upvote' : 'Downvote'}
+      </Button>
     </div>
   );
 }
