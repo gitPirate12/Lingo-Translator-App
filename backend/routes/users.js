@@ -24,9 +24,10 @@ router.get('/', getAllUsers);
 router.get('/:id', getUserById);
 
 // Delete user profile
-router.delete('/profile', deleteUserProfile);
+router.delete('/:id', deleteUserProfile);
+
 
 // Update user profile
-router.put('/profile',  updateUserProfile);
+router.put('/:id',  updateUserProfile);
 
 module.exports = router;

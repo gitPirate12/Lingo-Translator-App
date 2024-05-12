@@ -10,10 +10,14 @@
     "axios": "^1.6.8",
     "emoji-picker-react": "^4.9.2",
     "exceljs": "^4.4.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "",
     "react-dom": "",
     "react-router-dom": "",
     "react-scripts": "",
+    "react-speech-recognition": "^3.10.0",
+    "react-use-clipboard": "^1.0.9",
     "sweetalert2": "^11.10.8"
   },
   "scripts": {

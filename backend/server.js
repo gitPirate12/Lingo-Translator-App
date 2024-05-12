@@ -11,6 +11,8 @@ const PostRoutes = require('./routes/posts');
 const ReplyRoutes = require('./routes/replies');
 const userRoutes = require('./routes/users');
 const emojiRouter = require('./routes/emoji');
+const wordRoutes = require('./routes/words');
+
 
 // Initialize Express app
 const app = express();
@@ -32,6 +34,8 @@ app.use('/api/posts', PostRoutes);
 app.use('/api/replies', ReplyRoutes);
 app.use('/api/users', userRoutes);
 app.use('/emoji', emojiRouter);
+app.use('/api/culture',wordRoutes);
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })

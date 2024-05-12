@@ -19,6 +19,9 @@ import EditPost from './component/DiscussionForum/EditPost';
 import AddReply from './component/DiscussionForum/AddReply';
 import EditReply from './component/DiscussionForum/EditReply';
 import './App.css';
+import Transltor from './component/translator/translator'
+import ViewProfile from './component/Auth/ViewProfile';
+import EditProfile from './component/Auth/EditProfile';
 
 
 function App() {
@@ -39,6 +42,9 @@ function App() {
           <Route path='/editpost/:postId' element={<EditPost />} />
           <Route path='/addreply/:postId' element={<AddReply />} />
           <Route path='/editreply/:replyId' element={<EditReply />} />
+          <Route path='/' element={<Transltor />} />
+         <Route path='/viewprofile' element={<ViewProfile />} />
+          <Route path='/editprofile' element={<EditProfile />} />
           
          
         </Routes>
