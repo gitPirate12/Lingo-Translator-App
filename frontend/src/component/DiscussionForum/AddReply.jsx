@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom'; // Import the useNavigate and useParams hooks
 import { useLogin } from '../../hooks/useLogin'; // Import the useLogin hook
+import { Typography, TextField, Button, Box } from '@mui/material'; // Import Box component from MUI
+import { ArrowBack } from '@mui/icons-material';
 
 function AddReply({ parentReplyId, onSuccess }) {
-  const { postId ,} = useParams(); // Extract postId from URL params
+  const { postId } = useParams(); // Extract postId from URL params
   const navigate = useNavigate(); // Initialize navigate function from useNavigate
-  console.log(postId, parentReplyId, onSuccess);
   const [comment, setComment] = useState('');
   const { isLoading, error } = useLogin(); // Get login status and error from the useLogin hook
 
@@ -50,18 +51,26 @@ function AddReply({ parentReplyId, onSuccess }) {
   };
 
   return (
-    <div>
+    <div className='addReply' style={{ minHeight: '100vh', padding: '20px' }}>
+      <Typography variant="h4" gutterBottom>Add Reply</Typography>
       <form onSubmit={handleSubmit}>
-        <textarea
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          label="Reply"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Type your reply here..."
           required
-        ></textarea>
-        <button type="submit" disabled={isLoading}>Submit Reply</button>
-        {error && <div>Error: {error}</div>}
+          margin="normal"
+        />
+        <Box display="flex"  alignItems="center" mt={2}> {/* Wrap buttons in a Box with Flexbox styling */}
+          <Button type="submit" variant="contained" disabled={isLoading} style={{ marginRight:'30px' }}>Submit Reply</Button>
+          <Button onClick={handleBack} startIcon={<ArrowBack />}>Back</Button>
+        </Box>
+        {error && <Typography variant="body1" color="error">Error: {error}</Typography>}
       </form>
-      <button onClick={handleBack}>Back</button>
     </div>
   );
 }

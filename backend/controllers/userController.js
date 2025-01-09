@@ -58,8 +58,9 @@ const signupUser = async (req, res) => {
 
 // Delete user profile
 const deleteUserProfile = async (req, res) => {
+    const { id } = req.params;
     try {
-        await User.findByIdAndRemove(req.user.id);
+        await User.findByIdAndRemove(id); // Use id extracted from route parameters
         res.json({ msg: 'User profile deleted' });
     } catch (error) {
         console.error(error.message);
@@ -67,32 +68,33 @@ const deleteUserProfile = async (req, res) => {
     }
 };
 
-// Update user profile
+
 const updateUserProfile = async (req, res) => {
-  try {
+    try {
       const { firstName, lastName, city } = req.body;
-
+  
       // Retrieve user from database
-      const user = await User.findById(req.user.id);
-
+      const user = await User.findById(req.params.id);
+  
       if (!user) {
-          return res.status(404).json({ error: 'User not found' });
+        return res.status(404).json({ error: 'User not found' });
       }
-
+  
       // Update user details
       if (firstName) user.firstName = firstName;
       if (lastName) user.lastName = lastName;
       if (city) user.city = city;
-
+  
       // Save updated user details
       await user.save();
-
+  
       res.json({ msg: 'User profile updated successfully', user });
-  } catch (error) {
+    } catch (error) {
       console.error(error.message);
       res.status(500).send('Server Error');
-  }
-};
+    }
+  };
+  
 
 // Get all users
 const getAllUsers = async (req, res) => {

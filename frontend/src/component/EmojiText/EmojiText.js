@@ -37,7 +37,7 @@ function EmojiText() {
   };
 
   return (
-    <div className="emoji-card">
+    <div className="emoji-card" style={{ marginBottom: '300px' }}>
       <div className="emoji-header">
         Emoji to Text Translator
       </div>
@@ -59,6 +59,7 @@ function EmojiText() {
             <div className="meaning-heading">Sinhala</div>
             <div className="meaning-content">{meaningSin}</div>
           </div>
+          
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 /* Ensure proper sizing and scrolling behavior */
 .view-posts-container {
-    height: calc(100vh - 150px); /* Adjust based on footer height */
-    overflow-y: auto;
+   
+  
   }
   
   /* Adjust spacing */
@@ -16,10 +16,7 @@
   
   /* ViewPosts.css */
 
-.view-posts-container {
-    padding-bottom: 300px; /* Adjust as needed to create space for the footer */
-    margin-left: 30px;
-  }
+  
   
   
   .posts-list {

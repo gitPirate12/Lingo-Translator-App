@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './ViewPosts.css';
+import { Button, TextField, Typography, Box, List, ListItem, ListItemText, Divider, IconButton, Avatar } from '@mui/material';
+import { ThumbUp, ThumbDown, Edit, AddComment, ArrowDropUp, ArrowDropDown } from '@mui/icons-material';
 import DeletePost from './DeletePost';
-import HandleVote from './HandleVote';
 import DeleteReply from './DeleteReply';
 import EditReply from './EditReply';
 import GenerateReport from './GenerateReport'; // Import the GenerateReport component
 import { useLogin } from '../../hooks/useLogin'; // Import the useLogin hook
+import HandleVote from './HandleVote';
 
 function ViewPosts() {
   const [posts, setPosts] = useState([]);
@@ -16,7 +17,7 @@ function ViewPosts() {
   const [editReplyId, setEditReplyId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  const { isLoading, error: loginError } = useLogin(); // Use the useLogin hook to handle user login
+  const { isLoading, error: loginError } = useLogin();
 
   const fetchPosts = async () => {
     try {
@@ -47,15 +48,6 @@ function ViewPosts() {
     fetchPosts();
   }, []);
 
-  const handleDeletePost = async (postId) => {
-    try {
-      await axios.delete(`http://localhost:3040/api/posts/${postId}`);
-      fetchPosts();
-    } catch (error) {
-      console.error('Error deleting post:', error);
-    }
-  };
-
   const handleEditPost = (postId) => {
     navigate(`/editpost/${postId}`);
   };
@@ -70,21 +62,17 @@ function ViewPosts() {
 
   const handleVoteReply = async (replyId, voteType) => {
     try {
-      const token = JSON.parse(localStorage.getItem('user'))?.token; // Extract token from localStorage
-
-      // Check if token exists
+      const token = JSON.parse(localStorage.getItem('user'))?.token;
       if (!token) {
         throw new Error('User not authenticated');
       }
-
       const response = await axios.patch(`http://localhost:3040/api/replies/${replyId}/${voteType}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (response.status === 200) {
-        fetchPosts(); // Fetch posts again to update UI after voting
+        fetchPosts();
       } else {
         throw new Error('Failed to vote on reply');
       }
@@ -112,57 +100,97 @@ function ViewPosts() {
   }
 
   return (
-    <div className="view-posts-container">
-      <div>
-        <h1>Discussion forum</h1>
-      </div>
-      <div className="button-container">
-        <button className="add-post-button" onClick={() => navigate('/addpost')}>
+    <Box className="view-posts-container" style={{ minHeight: '100vh' }}>
+      <Typography variant="h3" component="div" gutterBottom>
+        Discussion forum
+      </Typography>
+      <Box className="button-container" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+        <GenerateReport />
+        <Button variant="contained" className="add-post-button" onClick={() => navigate('/addpost')}>
           Add Post
-        </button>
-        <GenerateReport /> {/* Render the GenerateReport component */}
-        <input
+        </Button>
+        <TextField
           className="search-bar"
           type="text"
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}
         />
-      </div>
-      <div className="posts-list">
-        {(searchQuery.trim() === '' ? posts : filteredPosts).map(post => (
-          <div key={post._id} className="post-item">
-            <h3>{post.question}</h3>
-            <p>{post.description}</p>
-            <p>Author: {post.author}</p>
-            <p>Tags: {post.tags.join(', ')}</p>
-            <p>Vote Count: {post.voteCount}</p>
-            <HandleVote postId={post._id} type="up" />
-            <HandleVote postId={post._id} type="down" />
-            <button className="action-button" onClick={() => handleEditPost(post._id)}>
-              Edit
-            </button>
-            <DeletePost postId={post._id} onDelete={() => handleDeletePost(post._id)} />
-            <button onClick={() => handleAddReply(post._id)}>Add Reply</button>
-            <h4>Replies:</h4>
-            <ul>
-              {post.replies.map(reply => (
-                <li key={reply._id}>
-                  <p>{reply.author.firstName} {reply.author.lastName}: {reply.comment}</p>
-                  <p>Vote Count: {reply.voteCount}</p>
+      </Box>
+      <Box className="posts-list">
+        {(searchQuery.trim() === '' ? posts : filteredPosts).map((post, index) => (
+          <Box key={post._id} className={`post-item post-${index}`} sx={{ border: '1px solid #ccc', padding: '20px', marginBottom: '20px' }}>
+            <Typography variant="h4" className={`post-question post-${index}`} gutterBottom>
+              {post.question}
+            </Typography>
+            <Typography className={`post-description post-${index}`} gutterBottom>
+              {post.description}
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <Avatar alt={post.author} src="/broken-image.jpg" sx={{ width: 24, height: 24, marginRight: '5px' }} />
+              <Typography className={`post-author post-${index}`} gutterBottom>
+                Author: {post.author}
+              </Typography>
+            </Box>
+            <Typography className={`post-tags post-${index}`} gutterBottom>
+              Tags: {post.tags.join(', ')}
+            </Typography>
+            <Typography className={`post-vote-count post-${index}`} gutterBottom>
+              Vote Count: {post.voteCount}
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <IconButton >
+                <HandleVote postId={post._id} type="up" />
+              </IconButton>
+              <IconButton>
+                <HandleVote postId={post._id} type="down" />
+              </IconButton>
+              <Button
+                variant="contained"
+                className={`action-button action-edit-${index}`}
+                onClick={() => handleEditPost(post._id)}
+                sx={{ marginLeft: '7px' }}
+              >
+                Edit
+              </Button>
+              <DeletePost postId={post._id} />
+              <Button onClick={() => handleAddReply(post._id)} sx={{ marginLeft: '-10px' }}>
+                <AddComment /> Add Reply
+              </Button>
+            </Box>
+            <Typography variant="h5" className={`post-replies-header post-${index}`} gutterBottom>
+              Replies:
+            </Typography>
+            <List className={`post-replies post-${index}`}>
+              {post.replies.map((reply, replyIndex) => (
+                <ListItem key={reply._id} className={`reply-item reply-${replyIndex}`} style={{ display: 'flex', alignItems: 'center' }}>
+                  {typeof reply.author === 'object' && (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Avatar alt={`${reply.author.firstName} ${reply.author.lastName}`} src="/broken-image.jpg" sx={{ width: 24, height: 24, marginRight: '5px' }} />
+                      <ListItemText className={`reply-author reply-${replyIndex}`}>
+                        <span>{reply.author.firstName} {reply.author.lastName}: {reply.comment}</span>
+                      </ListItemText>
+                    </div>
+                  )}
+                  <ListItemText className={`reply-vote-count reply-${replyIndex}`} style={{ width: '100px', textAlign: 'right', marginLeft: 'auto', paddingRight: '300px'  }}>
+                    Vote Count: {reply.voteCount}
+                  </ListItemText>
                   <DeleteReply replyId={reply._id} />
-                  <button onClick={() => handleEditReply(reply._id)}>Edit Reply</button>
+                  <Button className={`action-edit-reply action-edit-reply-${replyIndex}`} onClick={() => handleEditReply(reply._id)}>Edit Reply</Button>
                   {editReplyId === reply._id && <EditReply replyId={reply._id} />}
-                  <button onClick={() => handleVoteReply(reply._id, 'upvote')}>Upvote Reply</button>
-                  <button onClick={() => handleVoteReply(reply._id, 'downvote')}>Downvote Reply</button>
-                </li>
+                  <IconButton className={`action-vote-up action-vote-up-${replyIndex}`} onClick={() => handleVoteReply(reply._id, 'upvote')}>
+                    <ArrowDropUp />
+                  </IconButton>
+                  <IconButton className={`action-vote-down action-vote-down-${replyIndex}`} onClick={() => handleVoteReply(reply._id, 'downvote')}>
+                    <ArrowDropDown />
+                  </IconButton>
+                </ListItem>
               ))}
-            </ul>
-            <hr />
-          </div>
+            </List>
+          </Box>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
