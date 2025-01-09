@@ -18,7 +18,6 @@ import AddPost from './component/DiscussionForum/AddPost';
 import EditPost from './component/DiscussionForum/EditPost';
 import AddReply from './component/DiscussionForum/AddReply';
 import EditReply from './component/DiscussionForum/EditReply';
-import './App.css';
 import Transltor from './component/translator/translator'
 import ViewProfile from './component/Auth/ViewProfile';
 import EditProfile from './component/Auth/EditProfile';
